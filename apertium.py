@@ -5,7 +5,10 @@ parser = argparse.ArgumentParser(description='Provides pairs of Languages')
 parser.add_argument('S', help='Source Language Sentence')
 parser.add_argument('T', help='Target Language Sentence')
 parser.add_argument('P', help='Language Pair (for example en-eo)')
+parser.add_argument('-d', help='Specify the lanuguage pair directory')
 args = parser.parse_args()
+
+l_dir = args.d
 
 pairs = args.P.split('-')
 s_sentence = args.S
@@ -15,11 +18,15 @@ assert t_sentence != "", "T should be there."
 assert len(pairs) == 2, "P should be of form 'a-b', eg 'en-eo'"
 apertium = Apertium(pairs[0], pairs[1])
 
-(out,err) = apertium.test(s_sentence)
-assert err == '', "Apertium can't be found. Please check the installation."
+(lps,err) = apertium.test_apertium()
+assert err == '', "Apertium can't be found.\nPlease check the installation."
 
-pair = re.findall(r'\w+-\w+', out)
-assert args.P in pair, "Language Pair not found."
+if not l_dir:
+	pair = re.findall(r'\w+-\w+', lps)
+	assert args.P in pair, "Language Pair not found."
+else:
+	(out,err) = apertium.test_lp(l_dir)
+	assert err == '', "Language Pair not found."
 
 means = {}
 subseq = ""

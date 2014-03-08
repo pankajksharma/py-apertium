@@ -1,4 +1,4 @@
-import subprocess, shlex
+import subprocess
 
 class Apertium(object):
 	"""Base Class for Apertium Translations"""
@@ -16,9 +16,21 @@ class Apertium(object):
 						)
 		return process.communicate(input=src)
 
-	def test(self, slc):
+	def test_lp(self, dir):
 		"""Test for installation of Language Pair."""
-		devnull = open('/dev/null', 'w')
+		try:
+			process = subprocess.Popen(["apertium", "-d", dir,
+									"{0}-{1}".format(self.s_lang, self.t_lang)], 
+									stdout = subprocess.PIPE,
+									stdin = subprocess.PIPE,
+									stderr = subprocess.PIPE
+							)
+			return process.communicate("")
+		except:
+			return (None, None)
+
+	def test_apertium(self):
+		"""Test for installation of Apertium."""
 		try:
 			process = subprocess.Popen(["apertium","-l"], 
 									stdout = subprocess.PIPE,
