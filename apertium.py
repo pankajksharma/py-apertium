@@ -35,9 +35,9 @@ t_sentence = t_sentence.lower()
 words = s_sentence.split()
 for i in range(len(words)):
 	for j in range(i+1, len(words)):
-		subseq += ' '.join(words[i:j+1])+'|'
+		subseq += ' '.join(words[i:j+1])+'.|'
 (out, err) = apertium.convert(subseq)
 
-for sub, msub in zip(subseq.split('|'), out.split('|')):
+for sub, msub in zip(subseq.split('.|'), out.split('.|')):
 	if sub != "" and msub != "" and msub.lower() in t_sentence:
 		print ('("{0}", "{1}")'.format(sub, msub)) 
