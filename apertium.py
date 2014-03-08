@@ -26,7 +26,7 @@ if not l_dir:
 	assert args.P in pair, "Language Pair not found."
 else:
 	(out,err) = apertium.test_lp(l_dir)
-	assert err == '', "Language Pair not found."
+	assert out == '', "Language Pair not found."
 
 means = {}
 subseq = ""
@@ -40,4 +40,9 @@ for i in range(len(words)):
 
 for sub, msub in zip(subseq.split('.|'), out.split('.|')):
 	if sub != "" and msub != "" and msub.lower() in t_sentence:
+		if sub[0].islower() and len(msub) > 1:
+			msub = msub[0].lower() + msub[1:]
+		elif sub[0].islower():
+			msub = msub.lower()
 		print ('("{0}", "{1}")'.format(sub, msub)) 
+	
