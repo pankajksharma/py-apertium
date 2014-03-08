@@ -21,13 +21,16 @@ assert err == '', "Apertium can't be found. Please check the installation."
 pair = re.findall(r'\w+-\w+', out)
 assert args.P in pair, "Language Pair not found."
 
-pairs = 0
+means = {}
+subseq = ""
+t_sentence = t_sentence.lower()
+
 words = s_sentence.split()
 for i in range(len(words)):
 	for j in range(i+1, len(words)):
-		subseq = ' '.join(words[i:j+1])
-		(out, err) = apertium.convert(subseq)
-		if err == '' and out in t_sentence:
-			print("({0}, {1})".format(subseq, out))
-			pairs += 1
-print("Found {0} pair(s).".format(pairs))
+		subseq += ' '.join(words[i:j+1])+'|'
+(out, err) = apertium.convert(subseq)
+
+for sub, msub in zip(subseq.split('|'), out.split('|')):
+	if sub != "" and msub != "" and msub.lower() in t_sentence:
+		print ('("{0}", "{1}")'.format(sub, msub)) 
