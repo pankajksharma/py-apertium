@@ -23,12 +23,11 @@ assert err == '', "Apertium can't be found.\nPlease check the installation."
 
 if not l_dir:
 	pair = re.findall(r'\w+-\w+', lps)
-	assert args.P in pair, "Language Pair not found."
+	assert args.P in pair, "Language Pair not installed."
 else:
 	(out,err) = apertium.test_lp(l_dir)
 	assert out == '', "Language Pair not found."
 
-means = {}
 subseq = ""
 t_sentence = t_sentence.lower()
 
@@ -36,7 +35,7 @@ words = s_sentence.split()
 for i in range(len(words)):
 	for j in range(i+1, len(words)):
 		subseq += ' '.join(words[i:j+1])+'.|'
-(out, err) = apertium.convert(subseq)
+(out, err) = apertium.convert(subseq, l_dir)
 
 for sub, msub in zip(subseq.split('.|'), out.split('.|')):
 	if sub != "" and msub != "" and msub.lower() in t_sentence:

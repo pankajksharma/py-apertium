@@ -6,14 +6,22 @@ class Apertium(object):
 		self.s_lang = s_lang
 		self.t_lang = t_lang
 
-	def convert(self, src):
+	def convert(self, src, dir=None):
 		"""Converts src (source sentence) to t_lang (Target Language)"""
-		process = subprocess.Popen(["apertium", 
+		if dir:
+			process = subprocess.Popen(["apertium", "-d", dir, 
 							"{0}-{1}".format(self.s_lang, self.t_lang)],
 							stdin = subprocess.PIPE,
 							stdout = subprocess.PIPE,
 							stderr = subprocess.PIPE
 						)
+		else:
+			process = subprocess.Popen(["apertium", 
+							"{0}-{1}".format(self.s_lang, self.t_lang)],
+							stdin = subprocess.PIPE,
+							stdout = subprocess.PIPE,
+							stderr = subprocess.PIPE
+			)
 		return process.communicate(input=src)
 
 	def test_lp(self, dir):
