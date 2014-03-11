@@ -52,5 +52,8 @@ if reverse:
 	outp += get_pairs(subseq, out, s_sentence, means, reverse)
 
 #Print pairs
+printed_pairs = []
 for out in outp:
-	print ('("{0}", "{1}")'.format(out, means[out.lower()])) 
+	if (out.lower(), means[out.lower()]) not in printed_pairs:
+		print ('("{0}", "{1}")'.format(out, means[out.lower()]))
+		printed_pairs.append((out.lower(), means[out.lower()])) 
