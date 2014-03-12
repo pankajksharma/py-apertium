@@ -6,9 +6,9 @@ parser = argparse.ArgumentParser(description='Provides pairs of Languages')
 parser.add_argument('S', help='Source Language Sentence')
 parser.add_argument('T', help='Target Language Sentence')
 parser.add_argument('P', help='Language Pair (for example en-eo)')
-parser.add_argument('-d', help='Specify the lanuguage pair directory')
-parser.add_argument('-r', help='Checks for pairs reversibly',  action='store_true')
-parser.add_argument('-s', help='Translate single words as well.',  action='store_true')
+parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
+parser.add_argument('-r', help='Check for pairs reversibly as well',  action='store_true')
+parser.add_argument('-s', help='Ignore single words',  action='store_true')
 args = parser.parse_args()
 
 #Getting optional command line inputs.

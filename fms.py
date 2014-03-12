@@ -14,7 +14,8 @@ s1_sentence = preprocess(args.S1)
 assertion(s_sentence != "", "S should be there.\nSee -h for help")
 assertion(s1_sentence != "", "S1 should be there.\nSee -h for help")
 
-(larger, smaller) = (s_sentence, s1_sentence) if len(s_sentence) > len(s1_sentence) \
+(larger, smaller) = (s_sentence, s1_sentence) \
+					if len(s_sentence.split()) > len(s1_sentence.split()) \
 					else (s1_sentence, s_sentence)
 ll, sl = larger.split(), smaller.split()
 
@@ -23,7 +24,10 @@ cost = 0.0
 for word in sl:
 	if word not in ll:
 		cost += 1
-
+for word in ll:
+	if word not in sl:
+		cost += 1
+		
 fms = 1.0 - (cost/len(ll))
 
 print ('%.02f' %(fms*100))

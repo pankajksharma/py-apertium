@@ -16,12 +16,12 @@ positional arguments:
 
 optional arguments:
   -h, --help  show this help message and exit
-  -d D        Specify the lanuguage pair directory
-  -r          Checks for pairs reversibly
-  -s          Translate single words as well.
+  -d D        Specifies the lanuguage pair directory
+  -r          Checks for pairs reversibly as well
+  -s          Ignore single words
 
 Example Usage:
-	python apertium.py "bat under rat" "batilo sub rato" "en-eo" [-d installation sirectory] [-r] [-s] 
+	python apertium.py "bat under rat" "batilo sub rato" "en-eo" [-d installation_directory] [-r] [-s] 
 
 Expected Output:
 
@@ -43,3 +43,9 @@ positional arguments:
 
 optional arguments:
   -h, --help  show this help message and exit
+
+Example Usage:
+	 python fms.py "The man is in the moon" "The man in the moon"
+
+Expected Output:
+	83.33

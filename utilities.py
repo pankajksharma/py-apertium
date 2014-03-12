@@ -26,7 +26,7 @@ def get_subseqs(sentence, single_words_allowed=False):
 	subseq = ""
 	words = sentence.split()
 	for i in range(len(words)):
-		k = i if single_words_allowed else i+1
+		k = i if not single_words_allowed else i+1
 		for j in range(k, len(words)):
 			subseq += ' '.join(words[i:j+1])+'.|'
 	return subseq
