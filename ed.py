@@ -12,7 +12,7 @@ class memoize(dict):
 def subst_cost(x,y):
 	if x == y: 
 		return 0 
-	return 2
+	return 1
 
 @memoize
 def edit_distance(target, source):
