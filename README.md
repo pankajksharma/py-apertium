@@ -62,3 +62,19 @@ Example Usage:
 Expected Output:
 
 	83.33
+
+pairs.py
+--------
+usage: pairs.py [-h] S S1
+
+Provides phrase pairs
+
+positional arguments:
+
+  S           First Sentence
+
+  S1          Second Sentence
+
+optional arguments:
+
+  -h, --help  show this help message and exit
