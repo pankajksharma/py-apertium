@@ -77,7 +77,7 @@ args = parser.parse_args()
 S = preprocess(args.S).split()
 S1 = preprocess(args.S1).split()
 
-# find_alignment(S, S1)
+print find_alignment(S, S1)
 
 pairs = phrase_pairs(S, S1, find_alignment(S, S1))
 
