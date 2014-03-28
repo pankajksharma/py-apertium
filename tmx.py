@@ -65,4 +65,5 @@ for tmxu in tmunits:
 		pass
 
 	add_bpt_ept(tmxu, src, tgt, subseq, out_locations)
-	tmxf.save(tmname)	
+	tmxf.save(tmname)
+	# print str(tmxu)	

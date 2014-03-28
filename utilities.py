@@ -106,7 +106,7 @@ def add_bpt_ept(tmxu, src, tgt, subseqs, out_locations):
 			ele.attrib['i'] = str(pts[p][2])
 			if pts[p][1] == 'bpt':
 				ele.attrib['x'] = str(pts[p][3])
-			ele.text = ' '.join(srcl[pts[p][0]: pts[p+1][0]])
+			ele.tail = ' '.join(srcl[pts[p][0]: pts[p+1][0]])
 			seg.append(ele)
 
 		tgt_dom = tmxu.get_target_dom()
@@ -120,12 +120,13 @@ def add_bpt_ept(tmxu, src, tgt, subseqs, out_locations):
 				pts.append([loc[0], 'bpt', i, xs[s]])
 				pts.append([loc[1], 'ept', i])
 				i += 1
+		pts.sort()
 
 		for p in range(len(pts)-1):
 			ele = etree.Element(pts[p][1])
 			ele.attrib['i'] = str(pts[p][2])
 			if pts[p][1] == 'bpt':
 				ele.attrib['x'] = str(pts[p][3])
-			ele.text = tgt[pts[p][0]: pts[p+1][0]]
+			ele.tail = tgt[pts[p][0]: pts[p+1][0]]
 			seg.append(ele)
 			
