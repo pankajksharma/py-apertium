@@ -1,6 +1,19 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0"?>
 <tmx version="1.4">
- <header creationtool="XYZTool" creationtoolversion="1.01-023" datatype="PlainText" segtype="sentence" adminlang="en-us" srclang="EN" o-tmf="ABCTransMem" creationdate="20020101T163812Z" creationid="ThomasJ" changedate="20020413T023401Z" changeid="Amity" o-encoding="iso-8859-1">
+ <header
+  creationtool="XYZTool"
+  creationtoolversion="1.01-023"
+  datatype="PlainText"
+  segtype="sentence"
+  adminlang="en-us"
+  srclang="EN"
+  o-tmf="ABCTransMem"
+  creationdate="20020101T163812Z"
+  creationid="ThomasJ"
+  changedate="20020413T023401Z"
+  changeid="Amity"
+  o-encoding="iso-8859-1"
+ >
   <note>This is a note at document level.</note>
   <prop type="RTFPreamble">{\rtf1\ansi\tag etc...{\fonttbl}</prop>
   <ude name="MacRoman" base="Macintosh">
@@ -8,11 +21,18 @@
   </ude>
  </header>
  <body>
-  <tu tuid="0001" datatype="Text" usagecount="2" lastusagedate="19970314T023401Z">
+  <tu
+   tuid="0001"
+   datatype="Text"
+   usagecount="2"
+   lastusagedate="19970314T023401Z"
+  >
    <tuv xml:lang="en">
-    <seg><bpt i="1" x="1"> </bpt><bpt i="2" x="2">cat </bpt><bpt i="3" x="3"> </bpt><bpt i="4" x="4"> </bpt><ept i="1">over </ept><bpt i="5" x="5"> </bpt><ept i="2"> </ept><ept i="3">bat </ept><ept i="4"> </ept></seg></tuv>
+    <seg>cat over bat</seg>
+  </tuv>
   <tuv xml:lang="eo">
-    <seg><bpt i="1" x="1">kato</bpt><ept i="1"> </ept><bpt i="2" x="3">super</bpt><ept i="2"></ept><bpt i="3" x="4">super batilo</bpt><ept i="3"></ept><bpt i="4" x="5">batilo</bpt><ept i="4"></ept><bpt i="5" x="2">kato super</bpt></seg></tuv>
+    <seg>kato super batilo</seg>
+  </tuv>
   </tu>
  </body>
 </tmx>
