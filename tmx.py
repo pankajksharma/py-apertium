@@ -5,7 +5,9 @@ from utilities import *
 from translate.storage.tmx import *
 from tmxunit import TMXUnit
 from tmxfile import TMXFile
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 parser = argparse.ArgumentParser(description='Reads Translation Memory and saves the sub-segments')
 parser.add_argument('TM', help='Translation Memory')
 parser.add_argument('P', help='Language Pair for TM (for example en-eo)')
@@ -42,33 +44,31 @@ tmunits = tmxf.getunits()
 
 for tmxu in tmunits:
 	src, tgt = tmxu.getsource(), tmxu.gettarget()
-	if not tgt:
-		continue
+	print src, tgt
 
 	#Obtain Subsequences.
 	subseq = get_subseq_locations(src, single_words_allowed)
 	
 	srcl = src.split()
 	out_locations = {}
-
-	#Conversion
 	seqs_covered = []
-	for s in subseq:
-		seq = ' '.join(srcl[s[0]: s[1]])
-		if seq.lower() == src.lower():
-			continue
-		if seq.lower() not in seqs_covered:
-			(out, err) = apertium.convert(seq, l_dir)
-			out_locations[s] = get_out_locations(out, tgt)
-			seqs_covered.append(seq.lower())
-	
-	#If -r Option (does nothing for now).
-	if reverse:
-		pass
 
-	add_bpt_ept(tmxu, src, tgt, subseq, out_locations)
-	if tmx_out:
-		tmxf.save(tmx_out)
-	else:
-		tmxf.save(tmname)
+	try:
+		#Conversion
+		for s in subseq:
+			seq = ' '.join(srcl[s[0]: s[1]])
+			if seq.lower() == src.lower():
+				continue
+			if seq.lower() not in seqs_covered:
+				(out, err) = apertium.convert(seq, l_dir)
+				out_locations[s] = get_out_locations(out, tgt)
+				seqs_covered.append(seq.lower())
+			
+		add_bpt_ept(tmxu, src, tgt, subseq, out_locations)
+	except Exception,e:
+		print e	
+if tmx_out:
+	tmxf.save(tmx_out)
+else:
+	tmxf.save(tmname)
 	
