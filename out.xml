@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<tmx version="1.4">
+ <header creationtool="XYZTool" creationtoolversion="1.01-023" datatype="PlainText" segtype="sentence" adminlang="en-us" srclang="EN" o-tmf="ABCTransMem" creationdate="20020101T163812Z" creationid="ThomasJ" changedate="20020413T023401Z" changeid="Amity" o-encoding="iso-8859-1">
+  <note>This is a note at document level.</note>
+  <prop type="RTFPreamble">{\rtf1\ansi\tag etc...{\fonttbl}</prop>
+  <ude name="MacRoman" base="Macintosh">
+   <map unicode="#xF8FF" code="#xF0" ent="Apple_logo" subst="[Apple]"/>
+  </ude>
+ </header>
+ <body>
+  <tu tuid="0001" datatype="Text" usagecount="2" lastusagedate="19970314T023401Z">
+   <tuv xml:lang="en">
+    <seg><bpt i="1" x="1"/><bpt i="2" x="2"/>cat<bpt i="3" x="3"/><bpt i="4" x="4"/><ept i="1"/>over<bpt i="5" x="5"/><ept i="2"/><ept i="3"/>bat<ept i="4"/><ept i="5"/></seg></tuv>
+  <tuv xml:lang="eo">
+    <seg><bpt i="1" x="1"/><bpt i="5" x="2"/>kato<ept i="1"/> <bpt i="2" x="3"/><bpt i="3" x="4"/>super<ept i="2"/><ept i="5"/> <bpt i="4" x="5"/>batilo<ept i="3"/><ept i="4"/></seg></tuv>
+  </tu>
+ </body>
+</tmx>

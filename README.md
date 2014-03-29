@@ -78,3 +78,32 @@ positional arguments:
 optional arguments:
 
   -h, --help  show this help message and exit
+
+tmx.py
+------
+
+usage: tmx.py [-h] [-o O] [-d D] [-r] [-s] TM P
+
+Reads Translation Memory and saves the sub-segments
+
+positional arguments:
+
+  TM          Translation Memory
+
+  P           Language Pair for TM (for example en-eo)
+
+optional arguments:
+
+  -h, --help  show this help message and exit
+
+  -o O        Output file to save new TMX
+
+  -d D        Specify the lanuguage-pair installation directory
+
+  -r          Check for pairs reversibly as well
+
+  -s          Ignore single words
+
+Example Usage:
+
+   python fms.py old.tmx "en-eo" -o new.tmx

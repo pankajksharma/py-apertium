@@ -9,12 +9,14 @@ from tmxfile import TMXFile
 parser = argparse.ArgumentParser(description='Reads Translation Memory and saves the sub-segments')
 parser.add_argument('TM', help='Translation Memory')
 parser.add_argument('P', help='Language Pair for TM (for example en-eo)')
+parser.add_argument('-o', help='Output file to save new TMX')
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('-r', help='Check for pairs reversibly as well',  action='store_true')
 parser.add_argument('-s', help='Ignore single words',  action='store_true')
 args = parser.parse_args()
 
 #Getting optional command line inputs.
+tmx_out	= args.o
 reverse = args.r
 single_words_allowed = args.s
 
@@ -60,10 +62,13 @@ for tmxu in tmunits:
 			out_locations[s] = get_out_locations(out, tgt)
 			seqs_covered.append(seq.lower())
 	
-	#If -r Option is set then doing all above stuff in reverse.
+	#If -r Option (does nothing for now).
 	if reverse:
 		pass
 
 	add_bpt_ept(tmxu, src, tgt, subseq, out_locations)
-	tmxf.save(tmname)
-	# print str(tmxu)	
+	if tmx_out:
+		tmxf.save(tmx_out)
+	else:
+		tmxf.save(tmname)
+	
