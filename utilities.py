@@ -84,51 +84,47 @@ def get_out_locations(out, t_sentence):
 	return locations
 
 
-def add_bpt_ept(tmxu, src, tgt, subseqs, out_locations): 
+def add_bpt_ept(tmxu, src, tgt, lp, out_locations): 
+		"""Adds <bpt>, <ept> tags to tmx unit."""
 		srcl = src.split()
-		subseqs.remove((0, len(srcl)))
-		src_dom = tmxu.get_source_dom()
-		seg = list(src_dom.iter('seg'))[0]
-		seg.clear()
-		i,x = 1, 1
-		pts = []
-		xs = {}
-		for s in subseqs:
-			pts.append([s[0], 'bpt', i, x])
-			pts.append([s[1], 'ept', i])
-			xs[s] = x
+		src_pts = []
+		tgt_pts = []
+		i,j,x = 1,1,1
+
+		for s, locs in out_locations.iteritems():
+			src_pts.append([s[0], 'bpt', i, x])
+			src_pts.append([s[1], 'ept', i])
+			for loc in locs:
+				tgt_pts.append([loc[0], 'bpt', j, x])
+				tgt_pts.append([loc[1], 'ept', j])
+				j += 1
 			i += 1
 			x += 1
-		pts.sort()
+		
+		src_pts.sort()
+		tgt_pts.sort()
 
-		for p in range(len(pts)):
-			ele = etree.Element(pts[p][1])
-			ele.attrib['i'] = str(pts[p][2])
-			if pts[p][1] == 'bpt':
-				ele.attrib['x'] = str(pts[p][3])
-			if p != len(pts) - 1: 
-				ele.tail = ' '.join(srcl[pts[p][0]: pts[p+1][0]])
-			seg.append(ele)
+		for i in range(2):
+			if i == 0:
+				pts = src_pts
+				src_dom = tmxu.get_source_dom()
+				seg = list(src_dom.iter('seg'))[0]
+			else:
+				pts = tgt_pts
+				tgt_dom = tmxu.get_target_dom()
+				seg = list(tgt_dom.iter('seg'))[0]
+			seg.clear()
 
-		tgt_dom = tmxu.get_target_dom()
-		seg = list(tgt_dom.iter('seg'))[0]
-		seg.clear()
-
-		i = 1
-		pts = []
-		for s, locs in out_locations.iteritems():
-			for loc in locs:
-				pts.append([loc[0], 'bpt', i, xs[s]])
-				pts.append([loc[1], 'ept', i])
-				i += 1
-		pts.sort()
-
-		for p in range(len(pts)):
-			ele = etree.Element(pts[p][1])
-			ele.attrib['i'] = str(pts[p][2])
-			if pts[p][1] == 'bpt':
-				ele.attrib['x'] = str(pts[p][3])
-			if p != len(pts) - 1: 
-				ele.tail = tgt[pts[p][0]: pts[p+1][0]]
-			seg.append(ele)
+			for p in range(len(pts)):
+				ele = etree.Element(pts[p][1])
+				ele.attrib['i'] = str(pts[p][2])
+				if pts[p][1] == 'bpt':
+					ele.attrib['x'] = str(pts[p][3])
+					ele.attrib['type'] = 'apertium-'+lp
+				if p != len(pts) - 1: 
+					if i == 0:
+						ele.tail = ' '.join(srcl[pts[p][0]: pts[p+1][0]])
+					else:
+						ele.tail = tgt[pts[p][0]: pts[p+1][0]]
+				seg.append(ele)
 			

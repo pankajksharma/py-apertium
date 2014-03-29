@@ -13,18 +13,17 @@ parser.add_argument('TM', help='Translation Memory')
 parser.add_argument('P', help='Language Pair for TM (for example en-eo)')
 parser.add_argument('-o', help='Output file to save new TMX')
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
-parser.add_argument('-r', help='Check for pairs reversibly as well',  action='store_true')
 parser.add_argument('-s', help='Ignore single words',  action='store_true')
 args = parser.parse_args()
 
 #Getting optional command line inputs.
 tmx_out	= args.o
-reverse = args.r
 single_words_allowed = args.s
 
 #Applying some preprocessing on input data.
 l_dir = args.d
 tmname = args.TM
+lp = args.P
 pairs = args.P.split('-')
 
 #Testing for Apertium system wide installation.
@@ -44,8 +43,7 @@ tmunits = tmxf.getunits()
 
 for tmxu in tmunits:
 	src, tgt = tmxu.getsource(), tmxu.gettarget()
-	print src, tgt
-
+	
 	#Obtain Subsequences.
 	subseq = get_subseq_locations(src, single_words_allowed)
 	
@@ -53,20 +51,20 @@ for tmxu in tmunits:
 	out_locations = {}
 	seqs_covered = []
 
-	try:
-		#Conversion
-		for s in subseq:
-			seq = ' '.join(srcl[s[0]: s[1]])
-			if seq.lower() == src.lower():
-				continue
-			if seq.lower() not in seqs_covered:
-				(out, err) = apertium.convert(seq, l_dir)
-				out_locations[s] = get_out_locations(out, tgt)
-				seqs_covered.append(seq.lower())
-			
-		add_bpt_ept(tmxu, src, tgt, subseq, out_locations)
-	except Exception,e:
-		print e	
+	for s in subseq:
+		seq = ' '.join(srcl[s[0]: s[1]])
+		if seq.lower() == src.lower():
+			continue
+		if seq.lower() not in seqs_covered:
+			(out, err) = apertium.convert(seq, l_dir)
+			out_locs = get_out_locations(out, tgt)
+			if out_locs != []:
+				out_locations[s] = out_locs
+			seqs_covered.append(seq.lower())
+	out_locations[(0, len(srcl))] = [(0, len(tgt))]
+	add_bpt_ept(tmxu, src, tgt, lp, out_locations)
+		
+
 if tmx_out:
 	tmxf.save(tmx_out)
 else:
