@@ -61,7 +61,6 @@ for tmxu in tmunits:
 			if out_locs != []:
 				out_locations[s] = out_locs
 			seqs_covered.append(seq.lower())
-	out_locations[(0, len(srcl))] = [(0, len(tgt))]
 	add_bpt_ept(tmxu, src, tgt, lp, out_locations)
 		
 

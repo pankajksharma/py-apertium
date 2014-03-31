@@ -115,16 +115,30 @@ def add_bpt_ept(tmxu, src, tgt, lp, out_locations):
 				seg = list(tgt_dom.iter('seg'))[0]
 			seg.clear()
 
-			for p in range(len(pts)):
-				ele = etree.Element(pts[p][1])
-				ele.attrib['i'] = str(pts[p][2])
-				if pts[p][1] == 'bpt':
-					ele.attrib['x'] = str(pts[p][3])
-					ele.attrib['type'] = 'apertium-'+lp
-				if p != len(pts) - 1: 
-					if i == 0:
-						ele.tail = ' '.join(srcl[pts[p][0]: pts[p+1][0]])
-					else:
-						ele.tail = tgt[pts[p][0]: pts[p+1][0]]
-				seg.append(ele)
-			
+			if pts == []:
+				if i == 0:
+					seg.text = src
+				else:
+					seg.text = tgt
+			else:
+				if i == 0:
+					seg.text = ' '.join(srcl[0:pts[0][0]])
+				else:
+					seg.text = tgt[0: pts[0][0]].strip()
+				for p in range(len(pts)):
+					ele = etree.Element(pts[p][1])
+					ele.attrib['i'] = str(pts[p][2])
+					if pts[p][1] == 'bpt':
+						ele.attrib['x'] = str(pts[p][3])
+						ele.attrib['type'] = 'apertium-'+lp
+					if p != len(pts) - 1: 
+						if i == 0:
+							ele.tail = ' '.join(srcl[pts[p][0]: pts[p+1][0]])
+						else:
+							ele.tail = tgt[pts[p][0]: pts[p+1][0]].strip()
+					seg.append(ele)
+				if i == 0:
+					ele.tail = ' '.join(srcl[pts[-1][0]: len(srcl)])
+				else:
+					ele.tail = tgt[pts[-1][0]: len(tgt)].strip()			
+		
