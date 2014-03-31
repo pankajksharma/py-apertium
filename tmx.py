@@ -53,8 +53,6 @@ for tmxu in tmunits:
 
 	for s in subseq:
 		seq = ' '.join(srcl[s[0]: s[1]])
-		if seq.lower() == src.lower():
-			continue
 		if seq.lower() not in seqs_covered:
 			(out, err) = apertium.convert(seq, l_dir)
 			out_locs = get_out_locations(out, tgt)
