@@ -63,9 +63,13 @@ def get_subseq_locations(sentence, single_words_allowed=False):
 	subseq = []
 	words = sentence.split()
 	for i in range(len(words)):
+		beg = len(' '.join(words[0:i])) 
+		if i != 0:
+			beg += 1
 		k = i if not single_words_allowed else i+1
 		for j in range(k, len(words)):
-			subseq.append((i, j+1)) 	
+			end = len(' '.join(words[i:j+1]))
+			subseq.append((beg, beg+end)) 	
 	return subseq
 
 def get_out_locations(out, t_sentence):
@@ -78,7 +82,8 @@ def get_out_locations(out, t_sentence):
 		beg = t_sentence.find(out[starti:])
 		if beg == -1 or starti >= len(out):
 			break
-		if beg == 0 or t_sentence[beg-1] == " ":
+		if (beg == 0 or t_sentence[beg-1] == " ") \
+			and (beg+len(out) == len(t_sentence) or t_sentence[beg+len(out)] in [" ", ",", ".", "!"]):	#The word ends
 			locations.append((beg, beg+len(out)))
 		starti += len(out)
 	return locations
@@ -86,7 +91,6 @@ def get_out_locations(out, t_sentence):
 
 def add_bpt_ept(tmxu, src, tgt, lp, out_locations): 
 		"""Adds <bpt>, <ept> tags to tmx unit."""
-		srcl = src.split()
 		src_pts = []
 		tgt_pts = []
 		i,j,x = 1,1,1
@@ -109,22 +113,18 @@ def add_bpt_ept(tmxu, src, tgt, lp, out_locations):
 				pts = src_pts
 				src_dom = tmxu.get_source_dom()
 				seg = list(src_dom.iter('seg'))[0]
+				initial_text = src
 			else:
 				pts = tgt_pts
 				tgt_dom = tmxu.get_target_dom()
 				seg = list(tgt_dom.iter('seg'))[0]
+				initial_text = tgt
 			seg.clear()
 
 			if pts == []:
-				if i == 0:
-					seg.text = src
-				else:
-					seg.text = tgt
+				seg.text = initial_text
 			else:
-				if i == 0:
-					seg.text = ' '.join(srcl[0:pts[0][0]])
-				else:
-					seg.text = tgt[0: pts[0][0]].strip()
+				seg.text = initial_text[0:pts[0][0]].strip()
 				for p in range(len(pts)):
 					ele = etree.Element(pts[p][1])
 					ele.attrib['i'] = str(pts[p][2])
@@ -132,13 +132,8 @@ def add_bpt_ept(tmxu, src, tgt, lp, out_locations):
 						ele.attrib['x'] = str(pts[p][3])
 						ele.attrib['type'] = 'apertium-'+lp
 					if p != len(pts) - 1: 
-						if i == 0:
-							ele.tail = ' '.join(srcl[pts[p][0]: pts[p+1][0]])
-						else:
-							ele.tail = tgt[pts[p][0]: pts[p+1][0]].strip()
+						ele.tail = initial_text[pts[p][0]: pts[p+1][0]].strip()
 					seg.append(ele)
-				if i == 0:
-					ele.tail = ' '.join(srcl[pts[-1][0]: len(srcl)])
-				else:
-					ele.tail = tgt[pts[-1][0]: len(tgt)].strip()			
-		
+
+				ele.tail = initial_text[pts[-1][0]:].strip()
+				

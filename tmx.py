@@ -36,29 +36,33 @@ assertion(os.path.isfile(tmname), "TM couldn't be found.\nSee -h for help")
 assertion(len(pairs) == 2, "P should be of form 'a-b', eg 'en-eo'\nSee -h for help")
 
 #Checking Language pair Installation.
-check_installation(apertium, args.P, lps, l_dir)
+check_installation(apertium, lp, lps, l_dir)
 
 tmxf = TMXFile(tmname, pairs[0], pairs[1])
 tmunits = tmxf.getunits()
 
 for tmxu in tmunits:
-	src, tgt = tmxu.getsource(), tmxu.gettarget()
+	src, tgt = preprocess(tmxu.getsource()), preprocess(tmxu.gettarget())
 	
-	#Obtain Subsequences.
-	subseq = get_subseq_locations(src, single_words_allowed)
-	
-	srcl = src.split()
+	#Obtain Subsequences
 	out_locations = {}
 	seqs_covered = []
+	sub_segments = ""
 
+	subseq = get_subseq_locations(src, single_words_allowed)
 	for s in subseq:
-		seq = ' '.join(srcl[s[0]: s[1]])
-		if seq.lower() not in seqs_covered:
-			(out, err) = apertium.convert(seq, l_dir)
-			out_locs = get_out_locations(out, tgt)
-			if out_locs != []:
-				out_locations[s] = out_locs
-			seqs_covered.append(seq.lower())
+		seg = src[s[0]:s[1]]
+		if seg.lower() not in seqs_covered:
+			sub_segments += seg + '.|'
+			seqs_covered.append(seg.lower())
+
+	(outp, err) = apertium.convert(sub_segments, l_dir)
+	
+	for s, out in zip(subseq, outp.split('.|')):
+		out = preprocess(out)
+		out_locs = get_out_locations(out, tgt)
+		if out_locs != []:
+			out_locations[s] = out_locs
 	add_bpt_ept(tmxu, src, tgt, lp, out_locations)
 		
 
