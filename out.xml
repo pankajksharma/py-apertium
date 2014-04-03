@@ -3,16 +3,16 @@
 <header creationdate="Sat Feb  1 22:06:36 2014" srclang="ca" adminlang="ca" o-tmf="unknown" segtype="sentence" creationtool="Uplug" creationtoolversion="unknown" datatype="PlainText"/>
   <body>
     <tu>
-      <tuv xml:lang="ca"><seg>L'educació d'aquest<bpt i="2" x="2" type="apertium-ca-en"/>món<bpt i="1" x="1" type="apertium-ca-en"/><ept i="2"/>em<ept i="1"/>decep.</seg></tuv>
-      <tuv xml:lang="en"><seg>Education in this<bpt i="2" x="2" type="apertium-ca-en"/>world<ept i="2"/>disappoints<bpt i="1" x="1" type="apertium-ca-en"/>me<ept i="1"/>.</seg></tuv>
+      <tuv xml:lang="ca"><seg>L'educació d'aquest<bpt i="1" x="1" type="apertium-ca-en"/>món<ept i="1"/><bpt i="2" x="2" type="apertium-ca-en"/>em<ept i="2"/>decep.</seg></tuv>
+      <tuv xml:lang="en"><seg>Education in this<bpt i="1" x="1" type="apertium-ca-en"/>world<ept i="1"/>disappoints<bpt i="2" x="2" type="apertium-ca-en"/>me<ept i="2"/>.</seg></tuv>
     </tu>
     <tu>
       <tuv xml:lang="ca"><seg>Moltes felicitats!</seg></tuv>
       <tuv xml:lang="en"><seg>Congratulations!</seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg>Has tingut<bpt i="2" x="2" type="apertium-ca-en"/>sort<bpt i="1" x="1" type="apertium-ca-en"/><ept i="2"/>perquè<ept i="1"/>no t'ha mossegat.</seg></tuv>
-      <tuv xml:lang="en"><seg>You're<bpt i="2" x="2" type="apertium-ca-en"/>luck<ept i="2"/>y<bpt i="1" x="1" type="apertium-ca-en"/>because<ept i="1"/>he didn't bite you.</seg></tuv>
+      <tuv xml:lang="ca"><seg>Has tingut sort<bpt i="1" x="1" type="apertium-ca-en"/>perquè<ept i="1"/>no t'ha mossegat.</seg></tuv>
+      <tuv xml:lang="en"><seg>You're lucky<bpt i="1" x="1" type="apertium-ca-en"/>because<ept i="1"/>he didn't bite you.</seg></tuv>
     </tu>
     <tu>
       <tuv xml:lang="ca"><seg>Moltes gràcies.</seg></tuv>
@@ -27,36 +27,36 @@
       <tuv xml:lang="en"><seg>Oh, I'm sorry.</seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg><bpt i="1" x="1" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/><bpt i="12" x="12" type="apertium-ca-en"/><bpt i="14" x="14" type="apertium-ca-en"/><bpt i="19" x="19" type="apertium-ca-en"/>Les<bpt i="2" x="2" type="apertium-ca-en"/><bpt i="6" x="6" type="apertium-ca-en"/><bpt i="11" x="11" type="apertium-ca-en"/><bpt i="13" x="13" type="apertium-ca-en"/><ept i="1"/>úniques<bpt i="7" x="7" type="apertium-ca-en"/><bpt i="9" x="9" type="apertium-ca-en"/><bpt i="15" x="15" type="apertium-ca-en"/><bpt i="16" x="16" type="apertium-ca-en"/><ept i="2"/><ept i="19"/>respostes<bpt i="18" x="18" type="apertium-ca-en"/><ept i="15"/>útils<ept i="9"/><ept i="13"/><ept i="14"/><ept i="18"/>són<bpt i="3" x="3" type="apertium-ca-en"/><ept i="11"/><ept i="12"/><ept i="16"/>les<bpt i="4" x="4" type="apertium-ca-en"/>que<ept i="3"/><ept i="4"/><ept i="6"/><ept i="7"/><ept i="8"/>creen<bpt i="5" x="5" type="apertium-ca-en"/><bpt i="10" x="10" type="apertium-ca-en"/>noves<bpt i="17" x="17" type="apertium-ca-en"/><ept i="10"/>preguntes.<ept i="5"/><ept i="17"/></seg></tuv>
-      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/><bpt i="12" x="12" type="apertium-ca-en"/><bpt i="14" x="14" type="apertium-ca-en"/><bpt i="19" x="19" type="apertium-ca-en"/>The<ept i="1"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="6" x="6" type="apertium-ca-en"/><bpt i="11" x="11" type="apertium-ca-en"/><bpt i="13" x="13" type="apertium-ca-en"/>only<ept i="2"/><ept i="19"/><bpt i="7" x="7" type="apertium-ca-en"/><bpt i="9" x="9" type="apertium-ca-en"/><bpt i="16" x="16" type="apertium-ca-en"/><bpt i="18" x="18" type="apertium-ca-en"/>useful<ept i="18"/><bpt i="15" x="15" type="apertium-ca-en"/>answers<ept i="9"/><ept i="13"/><ept i="14"/><ept i="15"/>are<ept i="11"/><ept i="12"/><ept i="16"/><bpt i="3" x="3" type="apertium-ca-en"/>those<bpt i="4" x="4" type="apertium-ca-en"/>that<ept i="3"/><ept i="4"/><ept i="6"/><ept i="7"/><ept i="8"/>raise<bpt i="5" x="5" type="apertium-ca-en"/><bpt i="10" x="10" type="apertium-ca-en"/>new<ept i="10"/><bpt i="17" x="17" type="apertium-ca-en"/>questions.<ept i="5"/><ept i="17"/></seg></tuv>
+      <tuv xml:lang="ca"><seg><bpt i="3" x="3" type="apertium-ca-en"/><bpt i="10" x="10" type="apertium-ca-en"/><bpt i="12" x="12" type="apertium-ca-en"/><bpt i="15" x="15" type="apertium-ca-en"/><bpt i="17" x="17" type="apertium-ca-en"/>Les<ept i="17"/><bpt i="9" x="9" type="apertium-ca-en"/><bpt i="14" x="14" type="apertium-ca-en"/><bpt i="18" x="18" type="apertium-ca-en"/><bpt i="19" x="19" type="apertium-ca-en"/>úniques<ept i="12"/><ept i="19"/><bpt i="1" x="1" type="apertium-ca-en"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="5" x="5" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/>respostes<ept i="1"/><bpt i="7" x="7" type="apertium-ca-en"/>útils<ept i="3"/><ept i="5"/><ept i="7"/><ept i="14"/>són<ept i="2"/><ept i="15"/><ept i="18"/><bpt i="13" x="13" type="apertium-ca-en"/><bpt i="16" x="16" type="apertium-ca-en"/>les<ept i="13"/>que<ept i="8"/><ept i="9"/><ept i="10"/><bpt i="11" x="11" type="apertium-ca-en"/>creen<bpt i="4" x="4" type="apertium-ca-en"/><bpt i="6" x="6" type="apertium-ca-en"/>noves<ept i="4"/>preguntes.<ept i="6"/><ept i="11"/><ept i="16"/></seg></tuv>
+      <tuv xml:lang="en"><seg><bpt i="3" x="3" type="apertium-ca-en"/><bpt i="10" x="10" type="apertium-ca-en"/><bpt i="12" x="12" type="apertium-ca-en"/><bpt i="15" x="15" type="apertium-ca-en"/><bpt i="17" x="17" type="apertium-ca-en"/>The<ept i="17"/><bpt i="9" x="9" type="apertium-ca-en"/><bpt i="14" x="14" type="apertium-ca-en"/><bpt i="18" x="18" type="apertium-ca-en"/><bpt i="19" x="19" type="apertium-ca-en"/>only<ept i="12"/><ept i="19"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="5" x="5" type="apertium-ca-en"/><bpt i="7" x="7" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/>useful<ept i="7"/><bpt i="1" x="1" type="apertium-ca-en"/>answers<ept i="1"/><ept i="3"/><ept i="5"/><ept i="14"/>are<ept i="2"/><ept i="15"/><ept i="18"/><bpt i="13" x="13" type="apertium-ca-en"/>those<bpt i="16" x="16" type="apertium-ca-en"/>that<ept i="8"/><ept i="9"/><ept i="10"/><ept i="13"/><ept i="16"/>raise<bpt i="4" x="4" type="apertium-ca-en"/><bpt i="11" x="11" type="apertium-ca-en"/>new<ept i="11"/><bpt i="6" x="6" type="apertium-ca-en"/>questions.<ept i="4"/><ept i="6"/></seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg><bpt i="1" x="1" type="apertium-ca-en"/>"Ah!"<ept i="1"/>és<bpt i="3" x="3" type="apertium-ca-en"/>una<bpt i="2" x="2" type="apertium-ca-en"/>interjecció.<ept i="2"/><ept i="3"/></seg></tuv>
-      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-ca-en"/>"Ah!"<ept i="1"/>is<bpt i="3" x="3" type="apertium-ca-en"/>an<bpt i="2" x="2" type="apertium-ca-en"/>interjection.<ept i="2"/><ept i="3"/></seg></tuv>
+      <tuv xml:lang="ca"><seg><bpt i="2" x="2" type="apertium-ca-en"/>"Ah!"<ept i="2"/>és<bpt i="3" x="3" type="apertium-ca-en"/>una<bpt i="1" x="1" type="apertium-ca-en"/>interjecció.<ept i="1"/><ept i="3"/></seg></tuv>
+      <tuv xml:lang="en"><seg><bpt i="2" x="2" type="apertium-ca-en"/>"Ah!"<ept i="2"/>is<bpt i="3" x="3" type="apertium-ca-en"/>an<bpt i="1" x="1" type="apertium-ca-en"/>interjection.<ept i="1"/><ept i="3"/></seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg><bpt i="1" x="1" type="apertium-ca-en"/>Ell<ept i="1"/>toca<bpt i="3" x="3" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/>el<bpt i="2" x="2" type="apertium-ca-en"/><ept i="3"/>piano<ept i="2"/><ept i="4"/>molt bé.</seg></tuv>
-      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-ca-en"/>He<ept i="1"/>plays<bpt i="3" x="3" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/>the<ept i="3"/><bpt i="2" x="2" type="apertium-ca-en"/>piano<ept i="2"/><ept i="4"/>very well.</seg></tuv>
+      <tuv xml:lang="ca"><seg><bpt i="1" x="1" type="apertium-ca-en"/>Ell<ept i="1"/>toca<bpt i="2" x="2" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/>el<ept i="2"/><bpt i="3" x="3" type="apertium-ca-en"/>piano<ept i="3"/><ept i="4"/>molt bé.</seg></tuv>
+      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-ca-en"/>He<ept i="1"/>plays<bpt i="2" x="2" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/>the<ept i="2"/><bpt i="3" x="3" type="apertium-ca-en"/>piano<ept i="3"/><ept i="4"/>very well.</seg></tuv>
     </tu>
     <tu>
       <tuv xml:lang="ca"><seg>Fa<bpt i="1" x="1" type="apertium-ca-en"/>fred.<ept i="1"/></seg></tuv>
       <tuv xml:lang="en"><seg>It's<bpt i="1" x="1" type="apertium-ca-en"/>cold.<ept i="1"/></seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg><bpt i="5" x="5" type="apertium-ca-en"/><bpt i="6" x="6" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/>No<bpt i="1" x="1" type="apertium-ca-en"/><bpt i="2" x="2" type="apertium-ca-en"/>tinc<bpt i="3" x="3" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/><ept i="1"/><ept i="8"/>la<bpt i="7" x="7" type="apertium-ca-en"/><ept i="2"/><ept i="4"/><ept i="6"/>força<ept i="3"/><ept i="5"/><ept i="7"/>per continuar triant.</seg></tuv>
-      <tuv xml:lang="en"><seg>I don't<bpt i="1" x="1" type="apertium-ca-en"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="5" x="5" type="apertium-ca-en"/><bpt i="6" x="6" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/>have<ept i="1"/><ept i="8"/><bpt i="3" x="3" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/>the<ept i="2"/><ept i="4"/><ept i="6"/><bpt i="7" x="7" type="apertium-ca-en"/>strength<ept i="3"/><ept i="5"/><ept i="7"/>to keep trying.</seg></tuv>
+      <tuv xml:lang="ca"><seg><bpt i="4" x="4" type="apertium-ca-en"/><bpt i="5" x="5" type="apertium-ca-en"/><bpt i="6" x="6" type="apertium-ca-en"/>No<bpt i="2" x="2" type="apertium-ca-en"/><bpt i="7" x="7" type="apertium-ca-en"/>tinc<ept i="4"/><ept i="7"/><bpt i="3" x="3" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/>la<ept i="2"/><ept i="3"/><ept i="6"/><bpt i="1" x="1" type="apertium-ca-en"/>força<ept i="1"/><ept i="5"/><ept i="8"/>per continuar triant.</seg></tuv>
+      <tuv xml:lang="en"><seg>I don't<bpt i="2" x="2" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/><bpt i="5" x="5" type="apertium-ca-en"/><bpt i="6" x="6" type="apertium-ca-en"/><bpt i="7" x="7" type="apertium-ca-en"/>have<ept i="4"/><ept i="7"/><bpt i="3" x="3" type="apertium-ca-en"/><bpt i="8" x="8" type="apertium-ca-en"/>the<ept i="2"/><ept i="3"/><ept i="6"/><bpt i="1" x="1" type="apertium-ca-en"/>strength<ept i="1"/><ept i="5"/><ept i="8"/>to keep trying.</seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg>Què?<bpt i="1" x="1" type="apertium-ca-en"/>Encara<ept i="1"/>no saps<bpt i="2" x="2" type="apertium-ca-en"/>conduir?<ept i="2"/></seg></tuv>
-      <tuv xml:lang="en"><seg>What... you<bpt i="1" x="1" type="apertium-ca-en"/>still<ept i="1"/>don't know how to<bpt i="2" x="2" type="apertium-ca-en"/>drive?<ept i="2"/></seg></tuv>
+      <tuv xml:lang="ca"><seg>Què?<bpt i="2" x="2" type="apertium-ca-en"/>Encara<ept i="2"/>no saps<bpt i="1" x="1" type="apertium-ca-en"/>conduir?<ept i="1"/></seg></tuv>
+      <tuv xml:lang="en"><seg>What... you<bpt i="2" x="2" type="apertium-ca-en"/>still<ept i="2"/>don't know how to<bpt i="1" x="1" type="apertium-ca-en"/>drive?<ept i="1"/></seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg>La<bpt i="1" x="1" type="apertium-ca-en"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/>llibertat<bpt i="3" x="3" type="apertium-ca-en"/><ept i="1"/>no<ept i="3"/>és<bpt i="5" x="5" type="apertium-ca-en"/><ept i="4"/>gratuïta.<ept i="2"/><ept i="5"/></seg></tuv>
-      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-ca-en"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="4" x="4" type="apertium-ca-en"/>Freedom<ept i="1"/>is<bpt i="3" x="3" type="apertium-ca-en"/>no<ept i="3"/>t<ept i="4"/><bpt i="5" x="5" type="apertium-ca-en"/>free.<ept i="2"/><ept i="5"/></seg></tuv>
+      <tuv xml:lang="ca"><seg>La<bpt i="1" x="1" type="apertium-ca-en"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="3" x="3" type="apertium-ca-en"/>llibertat<ept i="3"/>no és<ept i="2"/><bpt i="4" x="4" type="apertium-ca-en"/>gratuïta.<ept i="1"/><ept i="4"/></seg></tuv>
+      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-ca-en"/><bpt i="2" x="2" type="apertium-ca-en"/><bpt i="3" x="3" type="apertium-ca-en"/>Freedom<ept i="3"/>is not<ept i="2"/><bpt i="4" x="4" type="apertium-ca-en"/>free.<ept i="1"/><ept i="4"/></seg></tuv>
     </tu>
     <tu>
-      <tuv xml:lang="ca"><seg><bpt i="1" x="1" type="apertium-ca-en"/>Estic<bpt i="2" x="2" type="apertium-ca-en"/><ept i="1"/>embarassada<ept i="2"/>de<bpt i="3" x="3" type="apertium-ca-en"/>quatre<ept i="3"/>mesos.</seg></tuv>
-      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-ca-en"/>I am<ept i="1"/><bpt i="3" x="3" type="apertium-ca-en"/>four<ept i="3"/>months<bpt i="2" x="2" type="apertium-ca-en"/>pregnant<ept i="2"/>.</seg></tuv>
+      <tuv xml:lang="ca"><seg><bpt i="2" x="2" type="apertium-ca-en"/>Estic<ept i="2"/><bpt i="1" x="1" type="apertium-ca-en"/>embarassada<ept i="1"/>de<bpt i="3" x="3" type="apertium-ca-en"/>quatre<ept i="3"/>mesos.</seg></tuv>
+      <tuv xml:lang="en"><seg><bpt i="2" x="2" type="apertium-ca-en"/>I am<ept i="2"/><bpt i="3" x="3" type="apertium-ca-en"/>four<ept i="3"/>months<bpt i="1" x="1" type="apertium-ca-en"/>pregnant<ept i="1"/>.</seg></tuv>
     </tu>
 </body>
 </tmx>
