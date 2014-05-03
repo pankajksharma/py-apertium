@@ -6,8 +6,8 @@ Takes an Apertium language pair, a source-language sentence S, and a target-lang
 
 ##Post GSoC scripts##
 
-apertium.py
------------
+###apertium.py###
+
 usage: post/apertium.py [-h] [-d D] [-r] [-s] S T P
 
 Provides pairs of Languages
@@ -42,8 +42,8 @@ Expected Output:
 
 (under rat, sub rato)
 
-fms.py
-------
+###fms.py###
+
 usage: post/fms.py [-h] S S1
 
 Provides FMS of strings S and S1
@@ -66,8 +66,7 @@ Expected Output:
 
 	83.33
 
-pairs.py
---------
+###pairs.py###
 usage: post/pairs.py [-h] S S1
 
 Provides phrase pairs
@@ -82,8 +81,7 @@ optional arguments:
 
   -h, --help  show this help message and exit
 
-tmx.py
-------
+###tmx.py###
 
 usage: post/tmx.py [-h] [-o O] [-d D] [-r] [-s] TM P
 

@@ -61,6 +61,7 @@ def LCS(seq1, seq2):
 
 def find_alignment(s, s1):
 	lcs = list(LCS(tuple(s), tuple(s1)))
+	print lcs
 	aligns = []
 	s_in, s1_in = -1, -1
 	for cs in lcs:
