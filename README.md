@@ -3,6 +3,22 @@ Apertium Python Wrapper
 
 Takes an Apertium language pair, a source-language sentence S, and a target-language sentence T, and outputs the set of all possible pairs of subsegments (s,t) such that s is a subsegment of S, t a subsegment of T and t is the Apertium translation of s or vice-versa (a subsegment is a sequence of whole words).
 
+See http://wiki.apertium.org/wiki/User:Pankajksharma/Application#Proposal for more detail.
+
+##GSoC work##
+
+###Set A generator###
+
+
+
+Example:  python A_generator.py "some string" "some another string" --min-fms=0.6 --min-len=1 --max-len=3
+
+Expected Output:
+
+("some string", "some another string")
+
+("string", "another string") 
+
 
 ##Post GSoC scripts##
 

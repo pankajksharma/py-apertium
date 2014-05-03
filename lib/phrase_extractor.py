@@ -10,9 +10,11 @@ class memoize(dict):
 		return result
 
 class PhraseExtractor(object):
-	def __init__(self, first_sentence, second_sentece):
+	def __init__(self, first_sentence, second_sentece, min_len, max_len):
 		self._src = tuple(first_sentence.split())
 		self._tgt = tuple(second_sentece.split())
+		self._min_len = min_len
+		self._max_len = max_len
 		self._lcs = list(self._LCS(self._src, self._tgt))
 
 	def _aligned(self, f_val, A, f_len, type='start'):
@@ -101,9 +103,11 @@ class PhraseExtractor(object):
 		src_non_aligns, tgt_non_aligns = self.find_non_alignments()
 		all_pairs = self.phrase_pairs()
 		selected_pairs = []
+		m = self._min_len
+		n = self._max_len
 
 		for a,b,c,d in all_pairs:
-			if any(a<=e and b>e for e in src_non_aligns) or \
-				any(c<=e and d>e for e in tgt_non_aligns):
+			if any(a<=e and b>e and m<=(b-a)+1<=n for e in src_non_aligns) or \
+				any(c<=e and d>e and m<=(d-c)+1<=n for e in tgt_non_aligns):
 				selected_pairs.append((a,b,c,d))
 		return selected_pairs
