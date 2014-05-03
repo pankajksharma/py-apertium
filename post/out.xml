@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<tmx version="1.4">
+<header creationdate="Sat Feb  1 22:06:56 2014" srclang="en" adminlang="en" o-tmf="unknown" segtype="sentence" creationtool="Uplug" creationtoolversion="unknown" datatype="PlainText"/>
+  <body>
+    <tu>
+      <tuv xml:lang="eu"><seg><bpt i="1" x="1" type="apertium-eu-en"/>Maite zaitut.<ept i="1"/></seg></tuv>
+      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-eu-en"/>I love you.<ept i="1"/></seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Ez dut japoniera hitz egiten.</seg></tuv>
+      <tuv xml:lang="en"><seg>I don't speak Japanese.</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Eskerrik asko.</seg></tuv>
+      <tuv xml:lang="en"><seg>Thank you very much!</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg><bpt i="1" x="1" type="apertium-eu-en"/>Esker mila!<ept i="1"/></seg></tuv>
+      <tuv xml:lang="en"><seg><bpt i="1" x="1" type="apertium-eu-en"/>Thank you very much!<ept i="1"/></seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Milesker!</seg></tuv>
+      <tuv xml:lang="en"><seg>Thank you very much!</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Esker aunitz!</seg></tuv>
+      <tuv xml:lang="en"><seg>Thank you very much!</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Sorpresa<bpt i="1" x="1" type="apertium-eu-en"/>bat<ept i="1"/>da.</seg></tuv>
+      <tuv xml:lang="en"><seg>It's<bpt i="1" x="1" type="apertium-eu-en"/>a<ept i="1"/>surprise.</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Kondoirik ba al duzu?</seg></tuv>
+      <tuv xml:lang="en"><seg>Do you have a condom?</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Hotza dago.</seg></tuv>
+      <tuv xml:lang="en"><seg>It's cold.</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>Euria ari du.</seg></tuv>
+      <tuv xml:lang="en"><seg>It is raining.</seg></tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="eu"><seg>"Eskerrik asko." "Zuri."</seg></tuv>
+      <tuv xml:lang="en"><seg>"Thank you." "You're welcome."</seg></tuv>
+    </tu>
+  </body>
+</tmx>
