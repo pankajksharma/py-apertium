@@ -9,6 +9,26 @@ See http://wiki.apertium.org/wiki/User:Pankajksharma/Application#Proposal for mo
 
 ###Set A generator###
 
+usage: A_generator.py [-h] [--min-fms MIN_FMS] [--min-len MIN_LEN]
+                      [--max-len MAX_LEN]
+                      S S1
+
+Generates set A.
+
+positional arguments:
+  S                  First Sentence
+
+  S1                 Second Sentence
+
+optional arguments:
+
+  -h, --help         show this help message and exit
+
+  --min-fms MIN_FMS  Minimum value of fuzzy match score of S and S1.
+
+  --min-len MIN_LEN  Minimum length of sub-string allowed.
+
+  --max-len MAX_LEN  Maximum length of sub-string allowed.
 
 
 Example:  python A_generator.py "some string" "some another string" --min-fms=0.6 --min-len=1 --max-len=3
