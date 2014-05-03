@@ -3,9 +3,12 @@ Apertium Python Wrapper
 
 Takes an Apertium language pair, a source-language sentence S, and a target-language sentence T, and outputs the set of all possible pairs of subsegments (s,t) such that s is a subsegment of S, t a subsegment of T and t is the Apertium translation of s or vice-versa (a subsegment is a sequence of whole words).
 
+
+##Post GSoC scripts##
+
 apertium.py
 -----------
-usage: apertium.py [-h] [-d D] [-r] [-s] S T P
+usage: post/apertium.py [-h] [-d D] [-r] [-s] S T P
 
 Provides pairs of Languages
 
@@ -29,7 +32,7 @@ optional arguments:
 
 Example Usage:
 
-	python apertium.py "bat under rat" "batilo sub rato" "en-eo" [-d installation_directory] [-r] [-s] 
+	python post/apertium.py "bat under rat" "batilo sub rato" "en-eo" [-d installation_directory] [-r] [-s] 
 
 Expected Output:
 
@@ -41,7 +44,7 @@ Expected Output:
 
 fms.py
 ------
-usage: fms.py [-h] S S1
+usage: post/fms.py [-h] S S1
 
 Provides FMS of strings S and S1
 
@@ -57,7 +60,7 @@ optional arguments:
 
 Example Usage:
 
-	 python fms.py "The man is in the moon" "The man in the moon"
+	 python post/fms.py "The man is in the moon" "The man in the moon"
 
 Expected Output:
 
@@ -65,7 +68,7 @@ Expected Output:
 
 pairs.py
 --------
-usage: pairs.py [-h] S S1
+usage: post/pairs.py [-h] S S1
 
 Provides phrase pairs
 
@@ -82,7 +85,7 @@ optional arguments:
 tmx.py
 ------
 
-usage: tmx.py [-h] [-o O] [-d D] [-r] [-s] TM P
+usage: post/tmx.py [-h] [-o O] [-d D] [-r] [-s] TM P
 
 Reads Translation Memory and saves the sub-segments
 
@@ -106,4 +109,4 @@ optional arguments:
 
 Example Usage:
 
-   python fms.py old.tmx "en-eo" -o new.tmx
+   python post/fms.py old.tmx "en-eo" -o new.tmx
