@@ -44,7 +44,7 @@ Expected Output:
 
 ###apertium.py###
 
-usage: post/apertium.py [-h] [-d D] [-r] [-s] S T P
+usage: pre_soc/apertium.py [-h] [-d D] [-r] [-s] S T P
 
 Provides pairs of Languages
 
@@ -68,7 +68,7 @@ optional arguments:
 
 Example Usage:
 
-	python post/apertium.py "bat under rat" "batilo sub rato" "en-eo" [-d installation_directory] [-r] [-s] 
+	python pre_soc/apertium.py "bat under rat" "batilo sub rato" "en-eo" [-d installation_directory] [-r] [-s] 
 
 Expected Output:
 
@@ -80,7 +80,7 @@ Expected Output:
 
 ###fms.py###
 
-usage: post/fms.py [-h] S S1
+usage: pre_soc/fms.py [-h] S S1
 
 Provides FMS of strings S and S1
 
@@ -96,14 +96,14 @@ optional arguments:
 
 Example Usage:
 
-	 python post/fms.py "The man is in the moon" "The man in the moon"
+	 python pre_soc/fms.py "The man is in the moon" "The man in the moon"
 
 Expected Output:
 
 	83.33
 
 ###pairs.py###
-usage: post/pairs.py [-h] S S1
+usage: pre_soc/pairs.py [-h] S S1
 
 Provides phrase pairs
 
@@ -119,7 +119,7 @@ optional arguments:
 
 ###tmx.py###
 
-usage: post/tmx.py [-h] [-o O] [-d D] [-r] [-s] TM P
+usage: pre_soc/tmx.py [-h] [-o O] [-d D] [-r] [-s] TM P
 
 Reads Translation Memory and saves the sub-segments
 
@@ -143,4 +143,4 @@ optional arguments:
 
 Example Usage:
 
-   python post/fms.py old.tmx "en-eo" -o new.tmx
+   python pre_soc/fms.py old.tmx "en-eo" -o new.tmx

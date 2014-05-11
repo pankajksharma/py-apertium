@@ -11,3 +11,11 @@ def assertion(condition, statement):
 	if not condition:
 		print (statement+"\nexiting...")
 		exit(1)
+
+def is_subsegment(segment, sentence):
+	"""Checks for subsegments."""
+	seg, sen = segment.lower(), sentence.lower()
+	if seg not in sen:
+		return False
+	return True
+
