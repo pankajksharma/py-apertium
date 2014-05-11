@@ -107,8 +107,8 @@ class PhraseExtractor(object):
 		n = self._max_len
 
 		for a,b,c,d in all_pairs:
-			if m<=(b-a)+1<=n and m<=(d-c)+1<=n and \
-				any(a<=e<=b for e in src_non_aligns) and \
-				any(c<=e<=d for e in tgt_non_aligns): #Checks for lengths & mis-alignments
+			if m<=(b-a)+1<=n and \
+				(any(a<=e<=b for e in src_non_aligns) or \
+				any(c<=e<=d for e in tgt_non_aligns)): #Checks for lengths & mis-alignments
 				selected_pairs.append((a,b,c,d))
 		return selected_pairs
