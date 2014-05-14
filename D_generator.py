@@ -4,7 +4,7 @@ from lib.ap import Apertium
 from lib.phrase_extractor import PhraseExtractor
 from lib.utilities import preprocess, assertion, is_subsegment
 
-parser = argparse.ArgumentParser(description='Generates set A.')
+parser = argparse.ArgumentParser(description='Generates set D.')
 parser.add_argument('S', help='Second Sentence')
 parser.add_argument('T', help='First Sentence Translation')
 parser.add_argument('S1', help='Second Sentence')
@@ -82,4 +82,4 @@ d_set = []
 for (s, s1, t, t1) in zip(src_segments, src1_segments, tgt_segments, tgt1_segments)[:-1]:
 	if is_subsegment(t, t_sentence):
 		d_set.append((t, t1))
-		print t,t1
+		print ('("{0}", "{1}")'.format(t,t1))

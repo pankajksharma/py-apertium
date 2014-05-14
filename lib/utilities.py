@@ -1,4 +1,4 @@
-import re
+import re, sys
 
 def preprocess(sentence):
 	"""Preprocesses the sentence to remove extra spaces."""
@@ -9,7 +9,7 @@ def preprocess(sentence):
 def assertion(condition, statement):
 	"""Checks condition and exits with NZ exit if it's not True."""
 	if not condition:
-		print (statement+"\nexiting...")
+		print >> sys.stderr, (statement+"\nexiting...")
 		exit(1)
 
 def is_subsegment(segment, sentence):
