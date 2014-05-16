@@ -4,7 +4,7 @@ from lib.ap import Apertium
 from lib.phrase_extractor import PhraseExtractor
 from lib.utilities import preprocess, assertion, is_subsegment
 
-parser = argparse.ArgumentParser(description='Generates set D.')
+parser = argparse.ArgumentParser(description='On the fly repairing of sentence.')
 parser.add_argument('S', help='Second Sentence')
 parser.add_argument('T', help='First Sentence Translation')
 parser.add_argument('S1', help='Second Sentence')
@@ -12,8 +12,8 @@ parser.add_argument('LP', help='Language Pair')
 
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
-parser.add_argument('--min-len', help='Minimum length of sub-string allowed.', default='2')
-parser.add_argument('--max-len', help='Maximum length of sub-string allowed.')
+parser.add_argument('--min-len', help='Minimum length of sub-segment allowed.', default='2')
+parser.add_argument('--max-len', help='Maximum length of sub-segment allowed.')
 args = parser.parse_args()
 
 #Applying some preprocessing on input data.

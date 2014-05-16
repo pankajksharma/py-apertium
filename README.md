@@ -7,6 +7,37 @@ See http://wiki.apertium.org/wiki/User:Pankajksharma/Application#Proposal for mo
 
 ##GSoC work##
 
+###On the fly patching###
+
+usage: repair.py [-h] [-d D] [--min-fms MIN_FMS] [--min-len MIN_LEN]
+                 [--max-len MAX_LEN]
+                 S T S1 LP
+
+On the fly repairing of sentence.
+
+positional arguments:
+
+  S                  Second Sentence
+
+  T                  First Sentence Translation
+
+  S1                 Second Sentence
+
+  LP                 Language Pair
+
+optional arguments:
+
+  -h, --help         show this help message and exit
+
+  -d D               Specify the lanuguage-pair installation directory
+
+  --min-fms MIN_FMS  Minimum value of fuzzy match score of S and S1.
+
+  --min-len MIN_LEN  Minimum length of sub-segment allowed.
+
+  --max-len MAX_LEN  Maximum length of sub-segment allowed.
+
+
 ###Set A generator###
 
 usage: A_generator.py [-h] [--min-fms MIN_FMS] [--min-len MIN_LEN]
