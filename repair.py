@@ -2,7 +2,7 @@ import argparse
 from lib.fms import FMS
 from lib.ap import Apertium
 from lib.phrase_extractor import PhraseExtractor
-from lib.utilities import preprocess, assertion, is_subsegment
+from lib.utilities import preprocess, assertion, get_subsegment_locs, patch
 
 parser = argparse.ArgumentParser(description='On the fly repairing of sentence.')
 parser.add_argument('S', help='Second Sentence')
@@ -35,6 +35,11 @@ min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) if args.max_len else max(len(s_sentence.split()), len(s1_sentence.split()))
 
+#Initiate and check Apertium
+apertium = Apertium(lps[0], lps[1])
+(out, err) = apertium.check_installations(lp_dir)
+assertion(out, err)
+
 #Calculate FMS between S and S1.
 fms = FMS(s_sentence, s1_sentence).calculate()
 
@@ -44,12 +49,7 @@ assertion(fms >= min_fms, "Sentences have low fuzzy match score of %.02f." %fms)
 #Get A set
 phrase_extractor = PhraseExtractor(s_sentence, s1_sentence, min_len, max_len)
 a_set = phrase_extractor.extract_pairs()
-
-#Initiate and check Apertium
-apertium = Apertium(lps[0], lps[1])
-(out, err) = apertium.check_installations(lp_dir)
-assertion(out, err)
-
+a_set_pairs = {}
 
 # Prepare to Generate D set.
 S = s_sentence.split()
@@ -59,9 +59,13 @@ src = ""
 src1 = ""
 
 for a,b,c,d in a_set:
+	try:
+		a_set_pairs[(a,b)].append((c,d))
+	except KeyError:
+		a_set_pairs[(a,b)] = [(c,d)]
+
 	str1 = ' '.join(S[a: b+1])
 	str2 = ' '.join(S1[c: d+1])
-	print '("{0}", "{1}")'.format(str1, str2)
 	src += str1 + '.|'
 	src1 += str2 + '.|'
 
@@ -77,10 +81,31 @@ src1_segments = src1.split('.|')
 tgt_segments = out.split('.|')
 tgt1_segments = out1.split('.|')
 
-#Generate D set
-d_set = []
-for (s, s1, t, t1) in zip(src_segments, src1_segments, tgt_segments, tgt1_segments)[:-1]:
-	print(s,s1,t,t1)
-	if is_subsegment(t, t_sentence):
-		d_set.append((t, t1))
-		# print ('("{0}", "{1}")'.format(t,t1))
+src_trans_pairs = {}
+src_trans_pairs1 = {}
+for (x, t, t1) in zip(a_set, tgt_segments[:-1], tgt1_segments[:-1]):
+	(a,b,c,d) = x
+	src_trans_pairs[(a,b)] = t
+	src_trans_pairs1[(c,d)] = t1
+
+#Main Algorithm begins
+s_set = [(t_sentence, 0, [])]	#[] for maintaing which words are changed	
+p = 0 							#Indexing begins with 0
+while p <= len(S):
+	for j in range(max([0, p-max_len]), p-min_len+1):
+		sigma = (j, p-1)	
+		if sigma not in src_trans_pairs.keys():	#Covers mismatch
+			continue
+		y = src_trans_pairs[sigma]	#No need for 'for' now
+		T = get_subsegment_locs(y, t_sentence)
+		if T != []:					#if y is not found in t
+			for sigma1 in a_set_pairs[sigma]:	#Source aligns
+				for tau in T:
+					tau1 = src_trans_pairs1[sigma1]	#No need for another 'for' now
+					for (t1, features, covered) in s_set:
+						# print tau, tau1
+						t1_new = patch(t1, tau, tau1, covered)
+						if t1_new != None:
+							pass
+	p += 1
+

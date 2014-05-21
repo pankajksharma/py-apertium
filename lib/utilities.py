@@ -19,3 +19,26 @@ def is_subsegment(segment, sentence):
 		return False
 	return True
 
+def get_subsegment_locs(segment, sentence):
+	"""Returns locations of segment in sentence."""
+	seg, sen = segment.lower().split(), sentence.lower().split()
+	locs, a, b = [], 0, 0
+	while a < len(sen):
+		if sen[a] == seg[b]:
+			b += 1
+		else:
+			b = 0
+		if b == len(seg):
+			locs.append((a-b+1, a))
+			b = 0
+		a += 1
+	return locs
+
+def patch(t_app, tau, tau1, covered_pos):
+	(a,b) = tau
+	if any(a<=c<=b for c in covered_pos):
+		return None
+	seg = t_app[a:b+1]
+	seg_left = t_app[:a]
+	seg_right = t_app[b+1:]
+	
