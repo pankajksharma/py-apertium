@@ -37,4 +37,4 @@ S1 = s1_sentence.split()
 for a,b,c,d in a_set:
 	str1 = ' '.join(S[a: b+1])
 	str2 = ' '.join(S1[c: d+1])
-	print '("{0}", "{1}")'.format(str1, str2)
+	print('("{0}", "{1}")'.format(str1, str2))

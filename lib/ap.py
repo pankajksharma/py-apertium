@@ -22,7 +22,9 @@ class Apertium(object):
 							stdout = subprocess.PIPE,
 							stderr = subprocess.PIPE
 			)
-		return process.communicate(input=src)
+		(out,err) = process.communicate(bytearray(src, 'utf-8'))
+		out, err = out.decode('utf-8'), err.decode('utf-8')
+		return (out, err)
 
 	def test_lp(self, dir):
 		"""Test for installation of Language Pair."""
@@ -52,10 +54,11 @@ class Apertium(object):
 		"""Checks for apertium and lp installations."""
 		lp = "{0}-{1}".format(self.s_lang, self.t_lang)
 		(lps,err) = self.test_apertium()
-		if err != '':
-			return (False, "Apertium can't be found.\nPlease check the installation.")
+
+		if err.decode('utf-8') != '':
+			return (False, "Apertium can't be found. Please check the installation.")
 		if not lp_dir:
-			pairs = re.findall(r'\w+-\w+', lps)
+			pairs = re.findall(r'\w+-\w+', lps.decode('utf-8'))
 			if lp not in pairs:
 				return (False, "Language Pair not installed.")
 		else:

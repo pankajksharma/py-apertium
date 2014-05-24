@@ -90,9 +90,9 @@ class PhraseExtractor(object):
 		return aligns
 
 	def find_non_alignments(self):
-		src_non_aligns = range(len(self._src))
-		tgt_non_aligns = range(len(self._tgt))
-
+		src_non_aligns = list(range(len(self._src)))
+		tgt_non_aligns = list(range(len(self._tgt)))
+		
 		aligns = self.find_alignments()
 		for (s,t) in aligns:
 			src_non_aligns.remove(s)

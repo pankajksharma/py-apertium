@@ -61,7 +61,7 @@ src1 = ""
 for a,b,c,d in a_set:
 	str1 = ' '.join(S[a: b+1])
 	str2 = ' '.join(S1[c: d+1])
-	print '("{0}", "{1}")'.format(str1, str2)
+	print('("{0}", "{1}")'.format(str1, str2))
 	src += str1 + '.|'
 	src1 += str2 + '.|'
 
@@ -72,7 +72,7 @@ src1_segments = src1.split('.|')
 
 #Get translations for segments.
 (out, err) = apertium.translate(src_combined)
-print out
+print(out)
 (out, out1) = out.split('.||.')
 
 tgt_segments = out.split('.|')
@@ -80,7 +80,7 @@ tgt1_segments = out1.split('.|')
 
 #Generate D set
 d_set = []
-for (s, s1, t, t1) in zip(src_segments, src1_segments, tgt_segments, tgt1_segments)[:-1]:
+for (s, s1, t, t1) in list(zip(src_segments, src1_segments, tgt_segments, tgt1_segments))[:-1]:
 	print(s,s1,t,t1)
 	if is_subsegment(t, t_sentence):
 		d_set.append((t, t1))

@@ -1,4 +1,4 @@
-from ed import edit_distance
+from lib.ed import edit_distance
 
 class FMS(object):
 	def __init__(self, source_sentence, target_sentence):
