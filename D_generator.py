@@ -72,6 +72,7 @@ src1_segments = src1.split('.|')
 
 #Get translations for segments.
 (out, err) = apertium.translate(src_combined)
+print out
 (out, out1) = out.split('.||.')
 
 tgt_segments = out.split('.|')
