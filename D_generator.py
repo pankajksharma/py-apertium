@@ -82,6 +82,6 @@ tgt1_segments = out1.split('.|')
 d_set = []
 for (s, s1, t, t1) in list(zip(src_segments, src1_segments, tgt_segments, tgt1_segments))[:-1]:
 	print(s,s1,t,t1)
-	if is_subsegment(t, t_sentence):
-		d_set.append((t, t1))
-		# print ('("{0}", "{1}")'.format(t,t1))
+	# if is_subsegment(t, t_sentence):
+	# 	d_set.append((t, t1))
+	# print ('("{0}", "{1}")'.format(t,t1))
