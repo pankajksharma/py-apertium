@@ -25,8 +25,8 @@ lp = args.LP
 lps = lp.split('-')
 
 #Testing Input data
-assertion(s_sentence != "", "S should not be blank.\nSee -h for help")
-assertion(s1_sentence != "", "S1 should not be blank.\nSee -h for help")
+assertion(s_sentence != "", "S should not be blank. See -h for help")
+assertion(s1_sentence != "", "S1 should not be blank. See -h for help")
 assertion(len(lps) == 2, "LP should be of type a-b, eg, 'en-eo'")
 
 #Read optional params
@@ -103,7 +103,6 @@ while p <= len(S):
 				for tau in T:
 					tau1 = src_trans_pairs1[sigma1]	#No need for another 'for' now
 					for (t1, features, covered) in s_set:
-						# print tau, tau1
 						t1_new = patch(t1, tau, tau1, covered)
 						if t1_new != None:
 							pass
