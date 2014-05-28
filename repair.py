@@ -104,6 +104,7 @@ while p <= len(S):
 					tau1 = src_trans_pairs1[sigma1]	#No need for another 'for' now
 					for (t1, features, covered) in s_set:
 						t1_new = patch(t1, tau, tau1, covered)
+						print(t1_new)
 						if t1_new != None:
 							pass
 	p += 1

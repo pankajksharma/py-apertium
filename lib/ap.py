@@ -26,16 +26,18 @@ class Apertium(object):
 		out, err = out.decode('utf-8'), err.decode('utf-8')
 		return (out, err)
 
-	def test_lp(self, dir):
+	def test_lp(self, directory):
 		"""Test for installation of Language Pair."""
 		try:
-			process = subprocess.Popen(["apertium", "-d", dir,
+			process = subprocess.Popen(["apertium", "-d", directory,
 									"{0}-{1}".format(self.s_lang, self.t_lang)], 
 									stdout = subprocess.PIPE,
 									stdin = subprocess.PIPE,
 									stderr = subprocess.PIPE
 							)
-			return process.communicate("")
+			(out,err) = process.communicate(bytearray("", 'utf-8'))
+			out, err = out.decode('utf-8'), err.decode('utf-8')
+			return (out, err)
 		except:
 			return (None, None)
 
