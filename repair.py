@@ -49,6 +49,7 @@ assertion(fms >= min_fms, "Sentences have low fuzzy match score of %.02f." %fms)
 #Get A set
 phrase_extractor = PhraseExtractor(s_sentence, s1_sentence, min_len, max_len)
 a_set = phrase_extractor.extract_pairs()
+
 a_set_pairs = {}
 
 # Prepare to Generate D set.
@@ -76,6 +77,7 @@ src1_segments = src1.split('.|')
 
 #Get translations for segments.
 (out, err) = apertium.translate(src_combined)
+
 (out, out1) = out.split('.||.')
 
 tgt_segments = out.split('.|')
@@ -98,14 +100,14 @@ while p <= len(S):
 			continue
 		y = src_trans_pairs[sigma]	#No need for 'for' now
 		T = get_subsegment_locs(y, t_sentence)
+		
 		if T != []:					#if y is not found in t
 			for sigma1 in a_set_pairs[sigma]:	#Source aligns
 				for tau in T:
 					tau1 = src_trans_pairs1[sigma1]	#No need for another 'for' now
 					for (t1, features, covered) in s_set:
 						t1_new = patch(t1, tau, tau1, covered)
-						print(t1_new)
 						if t1_new != None:
-							pass
+							print(t1_new)
 	p += 1
 
