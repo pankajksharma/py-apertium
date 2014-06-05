@@ -43,5 +43,8 @@ def patch(t_app, tau, tau1, covered_pos):
 	seg = ' '.join(t_app[a:b+1])
 	seg_left = ' '.join(t_app[:a])
 	seg_right = ' '.join(t_app[b+1:])
+	if seg_left != '':
+		tau1 = tau1.lower()
 	return (seg_left + ' ' + tau1 + ' ' + seg_right).strip()
+
 

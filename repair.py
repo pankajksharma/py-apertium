@@ -1,5 +1,6 @@
 import argparse
 from lib.fms import FMS
+from lib.features import *
 from lib.ap import Apertium
 from lib.phrase_extractor import PhraseExtractor
 from lib.utilities import preprocess, assertion, get_subsegment_locs, patch
@@ -11,6 +12,7 @@ parser.add_argument('S1', help='Second Sentence')
 parser.add_argument('LP', help='Language Pair')
 
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
+parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-segment allowed.', default='2')
 parser.add_argument('--max-len', help='Maximum length of sub-segment allowed.')
@@ -31,6 +33,7 @@ assertion(len(lps) == 2, "LP should be of type a-b, eg, 'en-eo'")
 
 #Read optional params
 lp_dir = args.d
+verbose = args.v
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) if args.max_len else max(len(s_sentence.split()), len(s1_sentence.split()))
@@ -49,6 +52,7 @@ assertion(fms >= min_fms, "Sentences have low fuzzy match score of %.02f." %fms)
 #Get A set
 phrase_extractor = PhraseExtractor(s_sentence, s1_sentence, min_len, max_len)
 a_set = phrase_extractor.extract_pairs()
+src_mismatches,_ = phrase_extractor.find_non_alignments()
 
 a_set_pairs = {}
 
@@ -109,5 +113,7 @@ while p <= len(S):
 						t1_new = patch(t1, tau, tau1, covered)
 						if t1_new != None:
 							print(t1_new)
+							if verbose:
+								print(get_features(p, sigma, src_mismatches, t1_new, t1, tau))
 	p += 1
 
