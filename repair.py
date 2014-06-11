@@ -59,6 +59,7 @@ a_set_pairs = {}
 # Prepare to Generate D set.
 S = s_sentence.split()
 S1 = s1_sentence.split()
+TS = t_sentence.split()
 
 src = ""
 src1 = ""
@@ -81,7 +82,7 @@ src1_segments = src1.split('.|')
 
 #Get translations for segments.
 (out, err) = apertium.translate(src_combined)
-
+# print(out, err)
 (out, out1) = out.split('.||.')
 
 tgt_segments = out.split('.|')
@@ -110,10 +111,16 @@ while p <= len(S):
 				for tau in T:
 					tau1 = src_trans_pairs1[sigma1]	#No need for another 'for' now
 					for (t1, features, covered) in s_set:
-						t1_new = patch(t1, tau, tau1, covered)
+						t1_new, covered_new = patch(t1, tau, tau1, covered[:])
+						# print(covered_new)
 						if t1_new != None:
 							print(t1_new)
+							features = get_features(p, sigma, src_mismatches, t1_new, t1, tau)
+							s_set.append((t1_new, features, covered_new))
 							if verbose:
-								print(get_features(p, sigma, src_mismatches, t1_new, t1, tau))
+								print(features)
+								print((' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
+										' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
+										' '.join(TS[tau[0]:tau[1]+1]).strip().lower(), tau1))
 	p += 1
 

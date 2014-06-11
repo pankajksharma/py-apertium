@@ -38,13 +38,18 @@ def patch(t_app, tau, tau1, covered_pos):
 	# print(tau, tau1)
 	(a,b) = tau
 	t_app = t_app.split()
+	# print(tau, tau1, covered_pos)
 	if(any(a<=c<=b for c in covered_pos)):
-		return None
+		return None, None
+	
+	for i in range(a, b+1):
+		if t_app[i] != tau1[i]:
+				covered_pos.append(i)
+	
 	seg = ' '.join(t_app[a:b+1])
 	seg_left = ' '.join(t_app[:a])
 	seg_right = ' '.join(t_app[b+1:])
 	if seg_left != '':
 		tau1 = tau1.lower()
-	return (seg_left + ' ' + tau1 + ' ' + seg_right).strip()
-
+	return (seg_left + ' ' + tau1 + ' ' + seg_right).strip(), covered_pos
 
