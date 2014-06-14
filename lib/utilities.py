@@ -35,17 +35,21 @@ def get_subsegment_locs(segment, sentence):
 	return locs
 
 def patch(t_app, tau, tau1, covered_pos):
-	# print(tau, tau1)
 	(a,b) = tau
 	t_app = t_app.split()
-	# print(tau, tau1, covered_pos)
+
 	if(any(a<=c<=b for c in covered_pos)):
 		return None, None
-	
+	seg = tau1.split()
+
+	# print(t_app, seg)
 	for i in range(a, b+1):
-		if t_app[i] != tau1[i]:
+		try:
+			if t_app[i] != seg[i-a]:
 				covered_pos.append(i)
-	
+		except:
+			covered_pos.append(i)
+			
 	seg = ' '.join(t_app[a:b+1])
 	seg_left = ' '.join(t_app[:a])
 	seg_right = ' '.join(t_app[b+1:])
