@@ -54,6 +54,7 @@ phrase_extractor = PhraseExtractor(s_sentence, s1_sentence, min_len, max_len)
 a_set = phrase_extractor.extract_pairs()
 src_mismatches,_ = phrase_extractor.find_non_alignments()
 
+
 a_set_pairs = {}
 
 # Prepare to Generate D set.

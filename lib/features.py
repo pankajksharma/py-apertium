@@ -7,7 +7,7 @@ def cover_all_mismatches(p, mismatches, sigma):
 def coverage(mismatches, sigma):
 	(a, b) = sigma
 	mismatches_le_b = [ m for m in mismatches if m <= b ]
-	return (abs(b-a)+1.0)/len(mismatches_le_b)
+	return (abs(b-a)+1.0)/(len(mismatches_le_b)+1.0)
 
 def contexts(t_app, tau):
 	(a,b) = tau
