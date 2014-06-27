@@ -7,7 +7,7 @@ class FMS(object):
 		self._tgt = tuple(target_sentence.split())
 
 	def calculate(self):
-		print(self._src, self._tgt)
+		# print(self._src, self._tgt)
 		self._ed = edit_distance(self._src, self._tgt) * 1.0
 		self._max_len = len(self._src) if len(self._src) > len(self._tgt) else len(self._tgt)
 		self.fms = 1.0 - (self._ed / self._max_len)
