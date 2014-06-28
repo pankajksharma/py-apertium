@@ -54,6 +54,7 @@ for file1 in all_files:
 				s, s1 = src_sentences[i], src_sentences[j]
 				fms = FMS(s, s1).calculate()
 				fmses.append(fms)
+		break
 
 pylab.hist(fmses, 100)
 
