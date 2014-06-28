@@ -1,11 +1,14 @@
 import argparse
 import os.path, sys
 from lib.fms import FMS
-from lib.utilities import assertion
 from lib.ap import Apertium
+from lib.utilities import assertion
+from lib.features import get_features
 from lib.phrase_extractor import PhraseExtractor
 from lib.utilities import preprocess, assertion, get_subsegment_locs, patch
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 parser = argparse.ArgumentParser(description='Regression test for repair.py')
 parser.add_argument('F', help='First file')
@@ -13,6 +16,7 @@ parser.add_argument('F1', help='Second file')
 parser.add_argument('LP', help='Language Pair')
 
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
+parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-string allowed.', default='2')
 parser.add_argument('--max-len', help='Maximum length of sub-string allowed.', default='5')
@@ -27,6 +31,7 @@ assertion(os.path.isfile(args.F1), "File 2 not found.")
 
 #Command line params
 lp_dir = args.d
+verbose = args.v
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) 
@@ -47,25 +52,30 @@ while True:
 	tgt_sentences.append(line2)
 
 assertion(len(src_sentences) == len(tgt_sentences), "Files are of different sizes.")
-sys.setrecursionlimit(10000)
 
 fms_map = {}
 for i in range(len(src_sentences)):
 	for j in range(i+1, len(src_sentences)):
 		s, s1 = src_sentences[i], src_sentences[j]
-		fms = FMS(s, s1).calculate()
-		if fms >= min_fms:
-			fms_map[(s,s1)] = (tgt_sentences[i], tgt_sentences[j])
+		fms = FMS(s, s1)
+		max_fms = fms.get_max_fms()			#Get max possible FMS for the pair
+		if max_fms >= min_fms:
+			fms = fms.calculate_using_wanger_fischer()	#Get actual FMS
+			if fms >= min_fms:
+				fms_map[(s,s1)] = (tgt_sentences[i], tgt_sentences[j])
 
 apertium = Apertium(lps[0], lps[1])
 (out, err) = apertium.check_installations(lp_dir)
 assertion(out, err)
 
-# print(fms_map.values())
+#Global values
+gl_wer = []
+best_wer = []
+gl_no_of_patches = 0.0
 
 for (s, s1) in fms_map.keys():
 	# print([s,s1])
-	s_sentence, s1_sentence,t_sentence = s, s1, fms_map[(s,s1)][0]
+	s_sentence, s1_sentence, (t_sentence, t1_sentence) = s, s1, fms_map[(s,s1)]
 	#Extracrt phrases
 	phrase_extractor = PhraseExtractor(s_sentence, s1_sentence, min_len, max_len)
 	a_set = phrase_extractor.extract_pairs()
@@ -116,6 +126,8 @@ for (s, s1) in fms_map.keys():
 	#Main Algorithm begins
 	s_set = [(t_sentence, 0, [])]	#[] for maintaing which words are changed	
 	p = 0 							#Indexing begins with 0
+	wer = []
+	no_of_patches = 0.0
 	while p <= len(S):
 		for j in range(max([0, p-max_len]), p-min_len+1):
 			sigma = (j, p-1)	
@@ -130,16 +142,26 @@ for (s, s1) in fms_map.keys():
 						tau1 = src_trans_pairs1[sigma1]	#No need for another 'for' now
 						for (t1, features, covered) in s_set:
 							t1_new, covered_new = patch(t1, tau, tau1, covered[:])
-							# print(covered_new)
 							if t1_new != None:
-								print(t1_new)
 								features = get_features(p, sigma, src_mismatches, t1_new, t1, tau)
 								s_set.append((t1_new, features, covered_new))
-								if verbose:
-									print(features)
-									print((' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
-											' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
-											' '.join(TS[tau[0]:tau[1]+1]).strip().lower(), tau1))
+								fms = FMS(t1_sentence, t1_new).calculate_using_wanger_fischer()
+								wer.append(1.0 - fms)
+								no_of_patches += 1
+								gl_wer.append(1.0 - fms)
+								gl_no_of_patches += 1
 		p += 1
+	if wer != []:
+		best_wer.append(min(wer))
+	if verbose:
+		if wer != []:
+			print("Best patched WER: {0}".format(min(wer)))
+			print("Average WER: {0}".format(sum(wer)/no_of_patches))
+		print("Number of patched sentences: {0}".format(int(no_of_patches)))
+		print("")	#Blank line
 
-
+print("Global Statistics:")
+print("Best Patch WER: {0}".format(min(gl_wer)))
+# print("Average WER of best Patched sentences: {0}".format(sum(best_wer) / (len(best_wer)*1.0)))
+print("Average WER value: {0}".format(sum(gl_wer) / gl_no_of_patches))
+print("Number of patched sentences: {0}".format(int(gl_no_of_patches)))

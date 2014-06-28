@@ -1,13 +1,15 @@
 import pylab
 import argparse
-import os.path, sys, re
 import pylab  as plb
+import os.path, sys, re
 from lib.fms import FMS
 from lib.utilities import assertion
 from lib.ap import Apertium
 from lib.phrase_extractor import PhraseExtractor
 from lib.utilities import preprocess, assertion, get_subsegment_locs, patch
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 parser = argparse.ArgumentParser(description='Regression test for repair.py')
 parser.add_argument('D', help='Corpus directory.')
