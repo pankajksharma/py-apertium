@@ -1,8 +1,8 @@
 import argparse
-from utilities import *
-from ed import edit_distance
+from lib.utilities import *
+from lib.edwf import EDWF
 
-parser = argparse.ArgumentParser(description='Provides FMS of strings S and S1')
+parser = argparse.ArgumentParser(description='Provides FMS of strings S and S1 using Wagner-Fischer algorithm.')
 parser.add_argument('S', help='First Sentence')
 parser.add_argument('S1', help='Second Sentence')
 args = parser.parse_args()
@@ -19,7 +19,7 @@ sl = tuple(s_sentence.split())
 sl1 = tuple(s1_sentence.split())
 
 #Find Edit Distance
-ed = edit_distance(sl, sl1)*1.0
+ed = EDWF(sl, sl1).get_distance()*1.0
 
 ll = len(sl) if len(sl) > len(sl1) else len(sl1)
 

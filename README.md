@@ -37,6 +37,62 @@ optional arguments:
 
   --max-len MAX_LEN  Maximum length of sub-segment allowed.
 
+###fms.py
+
+usage: fms.py [-h] S S1
+
+Provides FMS of strings S and S1 using Wagner-Fischer algorithm.
+
+positional arguments:
+
+  S           First Sentence
+
+  S1          Second Sentence
+
+optional arguments:
+
+  -h, --help  show this help message and exit
+
+
+###file_stats.py
+
+usage: file_stats.py [-h] [--min-fms MIN_FMS] F
+
+Calculates and show a histogram of the distribution of FMS between pair of sentences present in corpus F.
+
+positional arguments:
+
+  F                  Corpus path.
+
+optional arguments:
+
+  -h, --help         show this help message and exit
+
+  --min-fms MIN_FMS  Minimum value of fuzzy match score of S and S1.
+
+###stats.py
+
+usage: stats.py [-h] [-d D] [--min-fms MIN_FMS] [--min-len MIN_LEN]
+                [--max-len MAX_LEN]
+                D
+
+Calulates FMS distribtution for all corpuses pressent in directory D.
+
+positional arguments:
+
+  D                  Corpus directory.
+
+optional arguments:
+
+  -h, --help         show this help message and exit
+
+  -d D               Specify the lanuguage-pair installation directory
+
+  --min-fms MIN_FMS  Minimum value of fuzzy match score of S and S1.
+
+  --min-len MIN_LEN  Minimum length of sub-string allowed.
+
+  --max-len MAX_LEN  Maximum length of sub-string allowed.
 
 ###Set A generator###
 
