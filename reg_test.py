@@ -162,6 +162,6 @@ for (s, s1) in fms_map.keys():
 
 print("Global Statistics:")
 print("Best Patch WER: {0}".format(min(gl_wer)))
-# print("Average WER of best Patched sentences: {0}".format(sum(best_wer) / (len(best_wer)*1.0)))
+print("Average WER of best Patched sentences: {0}".format(sum(best_wer) / (len(best_wer)*1.0)))
 print("Average WER value: {0}".format(sum(gl_wer) / gl_no_of_patches))
 print("Number of patched sentences: {0}".format(int(gl_no_of_patches)))
