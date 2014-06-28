@@ -120,4 +120,4 @@ Example: python D_generator.py "he changed his number recently" "Va canviar el s
 
 ("Número recentment", "Adreça recentment")
 
-####For pre-SoC wok see [pre-soc/](/pre-soc)
+####For pre-SoC wok see [pre-soc/](https://github.com/pankajksharma/py-apertium/tree/master/pre_soc)
