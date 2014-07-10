@@ -35,6 +35,7 @@ def get_subsegment_locs(segment, sentence):
 	return locs
 
 def patch(t_app, tau, tau1, covered_pos):
+	print(t_app, tau, tau1)
 	(a,b) = tau
 	t_app = t_app.split()
 
@@ -42,10 +43,10 @@ def patch(t_app, tau, tau1, covered_pos):
 		return None, None
 	seg = tau1.split()
 
-	# print(t_app, seg)
+	print(a,b, seg, t_app[a:b+1])
 	for i in range(a, b+1):
 		try:
-			if t_app[i] != seg[i-a]:
+			if t_app[i].lower() != seg[i-a].lower():
 				covered_pos.append(i)
 		except:
 			covered_pos.append(i)

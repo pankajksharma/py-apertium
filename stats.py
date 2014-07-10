@@ -54,7 +54,7 @@ for file1 in all_files:
 		for i in range(len(src_sentences)):
 			for j in range(i+1, len(src_sentences)):
 				s, s1 = src_sentences[i], src_sentences[j]
-				fms = FMS(s, s1).calculate()
+				fms = FMS(s, s1).calculate_using_wanger_fischer()
 				fmses.append(fms)
 		break
 
