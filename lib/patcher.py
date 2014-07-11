@@ -55,8 +55,29 @@ class Patcher(object):
 			self.src_trans_map[(a,b)] = t
 			self.src_trans_map1[(c,d)] = t1
 
-	def _do_patching(self):
-		pass
+	def _do_patching(self, t_app, tau, tau1, covered_pos):
+		(a,b) = tau
+		t_app = t_app.split()
+
+		if(any(a<=c<=b for c in covered_pos)):
+			return None, None
+		seg = tau1.split()
+
+		print(a,b, t_app[a:b+1], seg, t_app)
+		
+		pe = PhraseExtractor(' '.join(t_app[a:b+1]).lower(), tau1.lower())
+		aligns = pe.find_alignments()
+		# print(x)
+		tg_aligns = [x for (_, x) in aligns]
+		cp = [a+i for i in range(len(seg))]
+		cp += covered_pos
+		seg = ' '.join(t_app[a:b+1])
+		seg_left = ' '.join(t_app[:a])
+		seg_right = ' '.join(t_app[b+1:])
+
+		if seg_left != '':
+			tau1 = tau1.lower()
+		return (seg_left + ' ' + tau1 + ' ' + seg_right).strip(), cp
 		
 	def _covers_mismatch(self, sigma):
 		return sigma in self.mismatches_map.keys() 
@@ -84,17 +105,17 @@ class Patcher(object):
 						for tau in T:
 							tau1 = self.src_trans_map1[sigma1]	#No need for another 'for' now
 							for (t1, features, covered) in s_set:
-								t1_new, covered_new = patch(t1, tau, tau1, covered[:])
+								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:])
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)
 									s_set.append((t1_new, features, covered_new))
 									# if verbose:
 									print(t1_new)
-									print(covered_new)
-									print(features)
-									print((' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
-												' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
-												' '.join(TS[tau[0]:tau[1]+1]).strip().lower(), tau1))
+									# print(covered_new)
+									# print(features)
+									# print((' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
+									# 			' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
+									# 			' '.join(TS[tau[0]:tau[1]+1]).strip().lower(), tau1))
 									# time.sleep(2)
 			p += 1
 		

@@ -10,7 +10,7 @@ class memoize(dict):
 		return result
 
 class PhraseExtractor(object):
-	def __init__(self, first_sentence, second_sentece, min_len, max_len):
+	def __init__(self, first_sentence, second_sentece, min_len=2, max_len=5):
 		self._src = tuple(first_sentence.split())
 		self._tgt = tuple(second_sentece.split())
 		self._min_len = min_len
