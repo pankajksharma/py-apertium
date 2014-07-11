@@ -62,15 +62,15 @@ class Patcher(object):
 		if(any(a<=c<=b for c in covered_pos)):
 			return None, None
 		seg = tau1.split()
-
-		print(a,b, t_app[a:b+1], seg, t_app)
+		# print(a,b, covered_pos, t_app[a:b+1], seg, t_app)
 		
 		pe = PhraseExtractor(' '.join(t_app[a:b+1]).lower(), tau1.lower())
 		aligns = pe.find_alignments()
-		# print(x)
+		
 		tg_aligns = [x for (_, x) in aligns]
-		cp = [a+i for i in range(len(seg))]
+		cp = [a+i for i in range(len(seg)) if i not in tg_aligns]
 		cp += covered_pos
+		# print(cp)
 		seg = ' '.join(t_app[a:b+1])
 		seg_left = ' '.join(t_app[:a])
 		seg_right = ' '.join(t_app[b+1:])
@@ -105,17 +105,20 @@ class Patcher(object):
 						for tau in T:
 							tau1 = self.src_trans_map1[sigma1]	#No need for another 'for' now
 							for (t1, features, covered) in s_set:
+								s_set_temp = []
 								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:])
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)
-									s_set.append((t1_new, features, covered_new))
+									s_set_temp.append((t1_new, features, covered_new))
+									# print(t_out)
 									# if verbose:
-									print(t1_new)
 									# print(covered_new)
 									# print(features)
 									# print((' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
 									# 			' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
 									# 			' '.join(TS[tau[0]:tau[1]+1]).strip().lower(), tau1))
 									# time.sleep(2)
+							s_set += s_set_temp
 			p += 1
+		return s_set
 		
