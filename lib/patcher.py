@@ -90,7 +90,7 @@ class Patcher(object):
 		S = self.s_sentence.split()
 		S1 = self.s1_sentence.split()
 		TS = self.t_sentence.split()
-		s_set = [(self.t_sentence, 0, [])]	#[] for maintaing which words are changed	
+		s_set = [(self.t_sentence, "unpatched", [])]	#[] for maintaing which words are changed	
 		p = 0 							#Indexing begins with 0
 		while p <= len(S):
 			for j in range(max([0, p-max_len]), p-min_len+1):
@@ -104,8 +104,8 @@ class Patcher(object):
 					for sigma1 in self.mismatches_map[sigma]:	#Source aligns
 						for tau in T:
 							tau1 = self.src_trans_map1[sigma1]	#No need for another 'for' now
+							s_set_temp = []
 							for (t1, features, covered) in s_set:
-								s_set_temp = []
 								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:])
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)

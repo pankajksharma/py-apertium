@@ -51,7 +51,12 @@ fms = FMS(s_sentence, s1_sentence).calculate_using_wanger_fischer()
 #Exit if low FMS.
 assertion(fms >= min_fms, "Sentences have low fuzzy match score of %.02f." %fms)
 
-Patcher(apertium, s_sentence, s1_sentence, t_sentence).patch(min_len, max_len)
+patches = Patcher(apertium, s_sentence, s1_sentence, t_sentence).patch(min_len, max_len)
+
+for (patch, features, _) in patches:
+	print(patch)
+	if verbose:
+		print(features)
 
 # #Get A set
 # phrase_extractor = PhraseExtractor(s_sentence, s1_sentence, min_len, max_len)
