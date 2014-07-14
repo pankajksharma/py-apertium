@@ -55,12 +55,21 @@ class Patcher(object):
 			self.src_trans_map[(a,b)] = t
 			self.src_trans_map1[(c,d)] = t1
 
-	def _do_patching(self, t_app, tau, tau1, covered_pos):
+	def _do_patching(self, t_app, tau, tau1, covered_pos, grounded_only):
 		(a,b) = tau
 		t_app = t_app.split()
 
 		if(any(a<=c<=b for c in covered_pos)):
 			return None, None
+
+		seg = ' '.join(t_app[a:b+1])
+		seg_left = ' '.join(t_app[:a])
+		seg_right = ' '.join(t_app[b+1:])
+
+		if grounded_only:
+			if not (seg_left and seg_right):
+				return None, None
+		
 		seg = tau1.split()
 		# print(a,b, covered_pos, t_app[a:b+1], seg, t_app)
 		
@@ -71,9 +80,6 @@ class Patcher(object):
 		cp = [a+i for i in range(len(seg)) if i not in tg_aligns]
 		cp += covered_pos
 		# print(cp)
-		seg = ' '.join(t_app[a:b+1])
-		seg_left = ' '.join(t_app[:a])
-		seg_right = ' '.join(t_app[b+1:])
 
 		if seg_left != '':
 			tau1 = tau1.lower()
@@ -82,7 +88,7 @@ class Patcher(object):
 	def _covers_mismatch(self, sigma):
 		return sigma in self.mismatches_map.keys() 
 
-	def patch(self, min_len=2, max_len=5):
+	def patch(self, min_len=2, max_len=5, grounded_only=False):
 		#Some preprocessings
 		self._do_edit_distace_alignment(min_len, max_len)
 		self._do_translations()
@@ -106,7 +112,7 @@ class Patcher(object):
 							tau1 = self.src_trans_map1[sigma1]	#No need for another 'for' now
 							s_set_temp = []
 							for (t1, features, covered) in s_set:
-								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:])
+								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:], grounded_only)
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)
 									s_set_temp.append((t1_new, features, covered_new))
