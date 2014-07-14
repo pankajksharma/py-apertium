@@ -9,9 +9,9 @@ class Patcher(object):
 	"""
 	def __init__(self, apertium, first_source_sentence, second_source_sentence, target_sentence):		
 		self.apertium = apertium
-		self.s_sentence = first_source_sentence
-		self.s1_sentence = second_source_sentence
-		self.t_sentence = target_sentence
+		self.s_sentence = first_source_sentence.lower()
+		self.s1_sentence = second_source_sentence.lower()
+		self.t_sentence = target_sentence.lower()
 
 	def _do_edit_distace_alignment(self, min_len, max_len):
 		#Do edit distance alignment
