@@ -17,7 +17,27 @@ class Patcher(object):
 		#Do edit distance alignment
 		phrase_extractor = PhraseExtractor(self.s_sentence, self.s1_sentence, min_len, max_len)
 		self.phrases = phrase_extractor.extract_pairs()
-		self.src_mismatches,_ = phrase_extractor.find_non_alignments()
+		self.src_mismatches, self.tgt_mismatches = phrase_extractor.find_non_alignments()
+
+	def _check_for_all_mismatches(self, cs, cs1):
+		for sm in self.src_mismatches:
+			for (a,b) in cs:
+				if a <= sm <= b:
+					break
+			else:
+				return False
+		for tm in self.tgt_mismatches:
+			for (a,b) in cs1:
+				if a <= tm <= b:
+					break
+			else:
+				return False
+		return True
+
+	def _covers_all_mimatches(self, sigma, sigma1, cs, cs1):
+		cs.append(sigma)
+		cs1.append(sigma1)
+		return self._check_for_all_mismatches(cs, cs1)
 
 	def _do_translations(self):
 		S = self.s_sentence.split()
@@ -96,7 +116,8 @@ class Patcher(object):
 		S = self.s_sentence.split()
 		S1 = self.s1_sentence.split()
 		TS = self.t_sentence.split()
-		s_set = [(self.t_sentence, "unpatched", [])]	#[] for maintaing which words are changed	
+		s_set = [(self.t_sentence, "unpatched", [], [], [], False)]	#[] for maintaing which words are changed	
+
 		p = 0 							#Indexing begins with 0
 		while p <= len(S):
 			for j in range(max([0, p-max_len]), p-min_len+1):
@@ -111,11 +132,15 @@ class Patcher(object):
 						for tau in T:
 							tau1 = self.src_trans_map1[sigma1]	#No need for another 'for' now
 							s_set_temp = []
-							for (t1, features, covered) in s_set:
+							for (t1, features, covered, cs, cs1, c_all) in s_set:
+								if c_all:
+									continue
 								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:], grounded_only)
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)
-									s_set_temp.append((t1_new, features, covered_new))
+									cam = self._covers_all_mimatches(sigma, sigma1, cs, cs1)
+									s_set_temp.append((t1_new, features, covered_new, cs, cs1, cam))
+									# s_set_temp[(t1_new, features, covered_new)] = self._covers_all_mimatches(sigma, sigma1)))
 									# print(t_out)
 									# if verbose:
 									# print(covered_new)
