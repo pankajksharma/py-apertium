@@ -132,7 +132,7 @@ class Patcher(object):
 						for tau in T:
 							tau1 = self.src_trans_map1[sigma1]	#No need for another 'for' now
 							s_set_temp = []
-							for (t1, features, covered, cs, cs1, c_all) in s_set:
+							for (t1, features, covered, cs, cs1, c_all, traces) in s_set:
 								if c_all:
 									continue
 								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:], grounded_only)
