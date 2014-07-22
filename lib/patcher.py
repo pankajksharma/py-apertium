@@ -116,7 +116,7 @@ class Patcher(object):
 		S = self.s_sentence.split()
 		S1 = self.s1_sentence.split()
 		TS = self.t_sentence.split()
-		s_set = [(self.t_sentence, "unpatched", [], [], [], False)]	#[] for maintaing which words are changed	
+		s_set = [(self.t_sentence, "unpatched", [], [], [], False, [])]	#[] for maintaing which words are changed	
 
 		p = 0 							#Indexing begins with 0
 		while p <= len(S):
@@ -139,7 +139,10 @@ class Patcher(object):
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)
 									cam = self._covers_all_mimatches(sigma, sigma1, cs, cs1)
-									s_set_temp.append((t1_new, features, covered_new, cs, cs1, cam))
+									s_set_temp.append((t1_new, features, covered_new, cs, cs1, cam,
+										(' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
+												' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
+												' '.join(TS[tau[0]:tau[1]+1]).strip().lower())))
 									# s_set_temp[(t1_new, features, covered_new)] = self._covers_all_mimatches(sigma, sigma1)))
 									# print(t_out)
 									# if verbose:

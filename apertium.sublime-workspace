@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"cov",
+				"cover_all"
+			],
+			[
+				"cs",
+				"cs1"
+			],
+			[
+				"s_se",
+				"s_set"
+			],
+			[
+				"sig",
+				"sigma1"
+			],
+			[
+				"_co",
+				"_covers_all_mimatches"
+			],
+			[
 				"fi",
 				"file"
 			],
@@ -108,10 +128,6 @@
 				"mismatches_map"
 			],
 			[
-				"s_se",
-				"s_sentence"
-			],
-			[
 				"max",
 				"max_len"
 			],
@@ -187,6 +203,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "repair.py",
+			"settings":
+			{
+				"buffer_size": 2335,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/patcher.py",
+			"settings":
+			{
+				"buffer_size": 4820,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -227,6 +259,7 @@
 	},
 	"file_history":
 	[
+		"/home/om/Development/apertium/README.md",
 		"/home/om/Development/apertium/pre_soc/ap.py",
 		"/home/om/Development/apertium/lib/__init__.py",
 		"/home/om/Development/apertium/lib/ed.py",
@@ -300,7 +333,6 @@
 		"/home/om/Development/apertium/pre_soc/ed.py",
 		"/home/om/Development/apertium/file_stats.py",
 		"/home/om/Development/apertium/fms.py",
-		"/home/om/Development/apertium/README.md",
 		"/home/om/Development/apertium/lib/edwf.py",
 		"/home/om/Development/apertium/pre_soc/README.md",
 		"/home/om/Development/apertium/test/ca.test1",
@@ -423,8 +455,67 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "repair.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2335,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2334,
+								2334
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "lib/patcher.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4820,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4614,
+								4614
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -478,6 +569,14 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"pat",
+				"lib/patcher.py"
+			],
+			[
+				"repa",
+				"repair.py"
+			]
 		],
 		"width": 0.0
 	},

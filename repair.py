@@ -13,8 +13,9 @@ parser.add_argument('T', help='First Sentence Translation')
 parser.add_argument('S1', help='Second Sentence')
 parser.add_argument('LP', help='Language Pair')
 
-parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('-v', help='Verbose Mode', action='store_true')
+parser.add_argument('-t', help='Show patching traces', action='store_true')
+parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('--cam', help='Only those patches which cover all the mismatches', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-segment allowed.', default='2')
@@ -37,6 +38,7 @@ assertion(len(lps) == 2, "LP should be of type a-b, eg, 'en-eo'")
 #Read optional params
 lp_dir = args.d
 verbose = args.v
+show_traces = args.t
 cover_all = args.cam
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
@@ -55,12 +57,16 @@ assertion(fms >= min_fms, "Sentences have low fuzzy match score of %.02f." %fms)
 
 patches = Patcher(apertium, s_sentence, s1_sentence, t_sentence).patch(min_len, max_len)
 # print patches
-for (patch, features, _, _, _, cam) in patches:
+for (patch, features, _, _, _, cam, traces) in patches:
 	if cover_all and cam:
 		print(patch)
 		if verbose:
 			print(features)
+		if show_traces:
+			print(traces)
 	elif not cover_all:
 		print(patch)
 		if verbose:
 			print(features)
+		if show_traces:
+			print(traces)
