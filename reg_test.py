@@ -18,6 +18,7 @@ parser.add_argument('LP', help='Language Pair (sl-tl)')
 
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('-v', help='Verbose Mode', action='store_true')
+parser.add_argument('--cam', help='Only those patches which cover all the mismatches', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-string allowed.', default='2')
 parser.add_argument('--max-len', help='Maximum length of sub-string allowed.', default='5')
@@ -36,6 +37,8 @@ assertion(os.path.isfile(args.out), args.out+" doesn't exist")
 #Command line params
 lp_dir = args.d
 verbose = args.v
+covers_all = args.cam
+
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) 
@@ -51,7 +54,10 @@ file1 = open(args.out)
 #Global values
 gl_wer = []
 best_wer = []
+gl_up_wer = []
 gl_no_of_patches = 0.0
+
+count = 1
 
 while True:
 	s = file1.readline()
@@ -72,26 +78,38 @@ while True:
 	
 	patches = Patcher(apertium, s, s1, t).patch(min_len, max_len)
 
-	for (patch, features, _) in patches:
-		# print(patch)
-		fms = FMS(patch.lower(), tgt_sentences).calculate_using_wanger_fischer()
-		wer.append(1.0-fms)			
-		no_of_patches += 1
+	unpatched = patches[0]
+	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+	gl_up_wer.append(up_wer)
+
+	for (patch, features, _, _, _, cam, traces) in patches[0:]:
+		if(covers_all and cam):
+			fms = FMS(patch.lower(), tgt_sentences).calculate_using_wanger_fischer()
+			wer.append(1.0-fms)			
+			no_of_patches += 1
+		elif not covers_all:
+			fms = FMS(patch.lower(), tgt_sentences).calculate_using_wanger_fischer()
+			wer.append(1.0-fms)			
+			no_of_patches += 1
 
 	gl_wer += wer
 	gl_no_of_patches += no_of_patches
 
 	if wer != []:
 		best_wer.append(min(wer))
+		gl_up_wer.append(wer[0])
+
 	if verbose:
 		if wer != []:
-			print("Best patched WER: {0}".format(min(wer)))
-			print("Average WER: {0}".format(sum(wer)/no_of_patches))
-		print("Number of patched sentences: {0}".format(int(no_of_patches)))
-		print("")	#Blank line
-
+			print("#{0} Best = {1}% Avg = {2}% Unpatched = {3}% N = {4}".
+				format(count, min(wer)*100, (sum(wer)/no_of_patches)*100, up_wer*100, int(no_of_patches)))
+		else:
+			print("#{0} Best = {1}% Avg = {2}% Unpatched = {3}% N = {4}".
+				format(count, up_wer*100, up_wer*100, up_wer*100, int(no_of_patches)))
+		count += 1
+		
 print("Global Statistics:")
-print("Best Patch WER: {0}".format(min(gl_wer)))
-print("Average WER of best Patched sentences: {0}".format(sum(best_wer) / (len(best_wer)*1.0)))
-print("Average WER value: {0}".format(sum(gl_wer) / gl_no_of_patches))
+print("Average best patched WER: {0}".format(sum(best_wer) / (len(best_wer)*1.0)))
+print("Average WER: {0}".format(sum(gl_wer) / gl_no_of_patches))
+print("Average unpatched WER: {0}".format(sum(gl_up_wer)/gl_no_of_patches))
 print("Number of patched sentences: {0}".format(int(gl_no_of_patches)))
