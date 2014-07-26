@@ -101,15 +101,15 @@ while True:
 
 	if verbose:
 		if wer != []:
-			print("#{0} Best = {1}% Avg = {2}% Unpatched = {3}% N = {4}".
-				format(count, min(wer)*100, (sum(wer)/no_of_patches)*100, up_wer*100, int(no_of_patches)))
+			print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%% N = %d"
+				%(count, min(wer)*100, (sum(wer)/no_of_patches)*100, up_wer*100, int(no_of_patches)))
 		else:
-			print("#{0} Best = {1}% Avg = {2}% Unpatched = {3}% N = {4}".
-				format(count, up_wer*100, up_wer*100, up_wer*100, int(no_of_patches)))
+			print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%% N = %d"
+				%(count, up_wer*100, up_wer*100, up_wer*100, int(no_of_patches)))
 		count += 1
 		
 print("Global Statistics:")
 print("Average best patched WER: {0}".format(sum(best_wer) / (len(best_wer)*1.0)))
-print("Average WER: {0}".format(sum(gl_wer) / gl_no_of_patches))
-print("Average unpatched WER: {0}".format(sum(gl_up_wer)/gl_no_of_patches))
+print("Average WER: {0}".format(sum(gl_wer) / len(gl_wer)))
+print("Average unpatched WER: {0}".format(sum(gl_up_wer)/len(gl_up_wer)))
 print("Number of patched sentences: {0}".format(int(gl_no_of_patches)))

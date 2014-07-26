@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"sh",
+				"show_traces"
+			],
+			[
 				"cov",
 				"cover_all"
 			],
@@ -82,10 +86,6 @@
 			[
 				"h",
 				"hotel"
-			],
-			[
-				"sh",
-				"sh"
 			],
 			[
 				"ke",
@@ -207,7 +207,7 @@
 			"file": "repair.py",
 			"settings":
 			{
-				"buffer_size": 2335,
+				"buffer_size": 2511,
 				"line_ending": "Unix"
 			}
 		},
@@ -215,7 +215,7 @@
 			"file": "lib/patcher.py",
 			"settings":
 			{
-				"buffer_size": 4820,
+				"buffer_size": 5020,
 				"line_ending": "Unix"
 			}
 		}
@@ -464,15 +464,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2335,
+						"buffer_size": 2511,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2334,
-								2334
+								2511,
+								2511
 							]
 						],
 						"settings":
@@ -481,7 +481,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 810.0,
+						"translation.y": 918.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -493,15 +493,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4820,
+						"buffer_size": 5020,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4614,
-								4614
+								3957,
+								3957
 							]
 						],
 						"settings":
@@ -510,7 +510,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2160.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
