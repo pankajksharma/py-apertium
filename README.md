@@ -53,12 +53,81 @@ optional arguments:
 
   -h, --help  show this help message and exit
 
+###reg_test.py
+
+Regression test for our patcher
+
+usage: reg_test.py [-h] [-d D] [-v] [--mode MODE] [--min-fms MIN_FMS]
+                   [--min-len MIN_LEN] [--max-len MAX_LEN]
+                   out LP
+
+
+positional arguments:
+
+  out                Output file generated from preprocess.py (en-es.pairs and en-es.pairs.s are included) 
+
+  LP                 Language Pair (sl-tl)
+
+optional arguments:
+
+  -h, --help         show this help message and exit
+
+  -d D               Specify the lanuguage-pair installation directory
+
+  -v                 Verbose Mode
+
+  --mode MODE        Modes('all', 'cam', 'compare') default mode is all
+
+  --min-fms MIN_FMS  Minimum value of fuzzy match score of S and S1.
+
+  --min-len MIN_LEN  Minimum length of sub-string allowed.
+
+  --max-len MAX_LEN  Maximum length of sub-string allowed.
+
+Script understands following modes:
+
+--all             Includes all types of patched sentences 
+--cam             Includes only those sentences which covers all mismatches
+--compare         Compares all reults for above two modes (verbose doesn't work in this mode)
+
+Example usage: python reg_test.py en-es.pairs en-es --mode compare
+
+
+###preprocess.py
+
+Preprocess the corpus for generating input for reg_test
+
+usage: preprocess.py [-h] [-v] [--min-fms MIN_FMS] [--max-len MAX_LEN]
+                     SLF TLF SLFT TLFT OUT
+
+positional arguments:
+
+  SLF                Source Language file for training
+
+  TLF                Target Language file for training
+
+  SLFT               Source Language file for testing
+
+  TLFT               Target Language file for testing
+
+  OUT                Output file for saving pairs
+
+optional arguments:
+
+  -h, --help         show this help message and exit
+
+  --min-fms MIN_FMS  Minimum value of fuzzy match score of S and S1(default 0.8)
+
+  --max-len MAX_LEN  Maximum length of sentences allowed (default 25)
+
+  example: python preprocess.py ../ap/mtacat/en.en-es.train ../ap/mtacat/es.en-es.train ../ap/mtacat/en.en-es.testset ../ap/mtacat/es.en-es.test en-es.pairs -v
+
 
 ###file_stats.py
 
-usage: file_stats.py [-h] [--min-fms MIN_FMS] F
-
 Calculates and show a histogram of the distribution of FMS between pair of sentences present in corpus F.
+
+usage: file_stats.py [-h] [--min-fms MIN_FMS] F
 
 positional arguments:
 
