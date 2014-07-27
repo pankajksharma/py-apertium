@@ -87,7 +87,9 @@ optional arguments:
 Script understands following modes:
 
 --all             Includes all types of patched sentences 
+
 --cam             Includes only those sentences which covers all mismatches
+
 --compare         Compares all reults for above two modes (verbose doesn't work in this mode)
 
 Example usage: python reg_test.py en-es.pairs en-es --mode compare
