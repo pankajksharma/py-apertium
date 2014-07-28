@@ -42,7 +42,7 @@ while True:
 	line1 = preprocess(file2.readline())
 	if not line or not line1:
 		break
-	if len(line.split()) > max_len or len(line1.split()) > max_len:
+	if len(line.split()) > max_len:
 		continue
 	src_sentences.append(line)
 	tgt_sentences.append(line1)
@@ -63,14 +63,14 @@ while True:
 	line1 = preprocess(file4.readline())
 	if not line or not line1:
 		break
-	if len(line.split()) > max_len or len(line1.split()) > max_len:
+	if len(line.split()) > max_len:
 		continue
 	for s,t in zip(src_sentences, tgt_sentences):
 		fms = FMS(s, line)
 		max_fms = fms.get_max_fms()			#Get max possible FMS for the pair
 		if max_fms >= min_fms:
 			fms = fms.calculate_using_wanger_fischer()	#Get actual FMS
-			if fms >= min_fms:
+			if fms >= min_fms and fms < 1.0:
 				file5.write(s+"\n")
 				file5.write(t+"\n")
 				file5.write(line+"\n")
