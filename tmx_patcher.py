@@ -69,7 +69,7 @@ sorted_fms = sorted(fmses, key=fmses.get)
 
 (src, tgt) = sorted_fms[0] #Best match 
 # print(s_sentence, src, tgt)
-patches = Patcher(apertium, s_sentence, src, tgt).patch(min_len, max_len)
+patches = Patcher(apertium, src, s_sentence, tgt).patch(min_len, max_len)
 # print patches
 for (patch, features, _, _, _, cam, traces) in patches:
 	if cover_all and cam:
