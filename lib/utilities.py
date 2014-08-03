@@ -23,7 +23,7 @@ def get_subsegment_locs(segment, sentence):
 	"""Returns locations of segment in sentence."""
 	seg, sen = segment.lower().split(), sentence.lower().split()
 	locs, a, b = [], 0, 0
-	while a < len(sen):
+	while a < len(sen) and b < len(seg):
 		if sen[a] == seg[b]:
 			b += 1
 		else:

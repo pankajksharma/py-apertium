@@ -67,14 +67,17 @@ if mode == 'compare':
 count = 1
 
 while True:
-	s = file1.readline()
-	t = file1.readline()
-	s1 = file1.readline()
-	t1 = file1.readline()
+	s = file1.readline().rstrip()
+	t = file1.readline().rstrip()
+	s1 = file1.readline().rstrip()
+	t1 = file1.readline().rstrip()
 
 	if not (s and s1 and t and t1):
 		break
-
+	# print(s,t,s1,t1)
+	print s
+	print t
+	print s1
 	wer = []
 	no_of_patches = 0.0
 	if mode == 'compare':
