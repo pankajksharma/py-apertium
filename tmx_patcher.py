@@ -18,6 +18,7 @@ parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('-t', help='Show patching traces', action='store_true')
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('--cam', help='Only those patches which cover all the mismatches', action='store_true')
+parser.add_argument('--go', help='To patch only grounded mismatches', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-segment allowed.', default='2')
 parser.add_argument('--max-len', help='Maximum length of sub-segment allowed.', default='5')
@@ -40,6 +41,7 @@ lp_dir = args.d
 verbose = args.v
 show_traces = args.t
 cover_all = args.cam
+grounded = args.go
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len)
@@ -68,9 +70,9 @@ assertion(fmses != {}, "No proper match with FMS > {0} could be found".format(mi
 sorted_fms = sorted(fmses, key=fmses.get)
 
 (src, tgt) = sorted_fms[0] #Best match 
-# print(s_sentence, src, tgt)
-patches = Patcher(apertium, src, s_sentence, tgt).patch(min_len, max_len)
-# print patches
+
+patches = Patcher(apertium, src, s_sentence, tgt).patch(min_len, max_len, grounded)
+
 for (patch, features, _, _, _, cam, traces) in patches:
 	if cover_all and cam:
 		print(patch)

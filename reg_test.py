@@ -19,6 +19,7 @@ parser.add_argument('LP', help='Language Pair (sl-tl)')
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('--mode', help="Modes('all', 'cam', 'compare')", default='all')
+parser.add_argument('--go', help='To patch only grounded mismatches', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-string allowed.', default='2')
 parser.add_argument('--max-len', help='Maximum length of sub-string allowed.', default='5')
@@ -40,7 +41,7 @@ verbose = args.v
 mode = args.mode.lower()
 
 assertion(mode in ['all', 'cam', 'compare'], "Mode couldn't be identified.")
-
+grounded = args.go
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) 
@@ -83,7 +84,7 @@ while True:
 
 	tgt_sentences = t1.lower()
 	
-	patches = Patcher(apertium, s, s1, t).patch(min_len, max_len)
+	patches = Patcher(apertium, s, s1, t).patch(min_len, max_len, grounded)
 
 	unpatched = patches[0]
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
@@ -136,15 +137,15 @@ if mode == 'compare':
 	print("Global Statistics(all):")
 else:
 	print("Global Statistics:")
-print("Average best patched WER: {0}".format(sum(best_wer) / (len(best_wer)*1.0)))
-print("Average WER: {0}".format(sum(gl_wer) / len(gl_wer)))
-print("Average unpatched WER: {0}".format(sum(gl_up_wer)/len(gl_up_wer)))
-print("Number of patched sentences: {0}".format(int(gl_no_of_patches)))
+print("Average best patched WER: %.02f%%" %(sum(best_wer) / len(best_wer) * 100))
+print("Average WER: %.02f%%" %(sum(gl_wer) / len(gl_wer) * 100))
+print("Average unpatched WER: %.02f%%" %(sum(gl_up_wer) / len(gl_up_wer) * 100))
+print("Number of patched sentences: %02d" %(int(gl_no_of_patches)))
 
 if mode == 'compare':
 	print("Global Statistics (covering all mismatches):")
-	print("Average best patched WER: {0}".format(sum(best_wer2) / (len(best_wer2)*1.0)))
-	print("Average WER: {0}".format(sum(gl_wer2) / len(gl_wer2)))
-	print("Average unpatched WER: {0}".format(sum(gl_up_wer)/len(gl_up_wer)))
-	print("Number of patched sentences: {0}".format(int(gl_no_of_patches2)))
+	print("Average best patched WER: %.02f%%" %(sum(best_wer2) / (len(best_wer2) * 100)))
+	print("Average WER: %.02f%%" %(sum(gl_wer2) / len(gl_wer2) * 100))
+	print("Average unpatched WER: %.02f%%" %(sum(gl_up_wer) / len(gl_up_wer) * 100))
+	print("Number of patched sentences: %02d" %(int(gl_no_of_patches2)))
 

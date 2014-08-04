@@ -87,11 +87,16 @@ class Patcher(object):
 		seg_right = ' '.join(t_app[b+1:])
 
 		if grounded_only:
-			if not (seg_left and seg_right):
+			pe = PhraseExtractor(seg.lower(), tau1.lower())
+			aligns = pe.find_alignments()
+			p = min(a[0] for a in aligns)
+			q = max(a[0] for a in aligns)
+			r = min(a[1] for a in aligns)
+			s = max(a[1] for a in aligns)
+			if p == q or r ==s or p != 0 or q != (b-a) or r != 0 or s != len(tau1.split())-1 :
 				return None, None
 		
 		seg = tau1.split()
-		# print(a,b, covered_pos, t_app[a:b+1], seg, t_app)
 		
 		pe = PhraseExtractor(' '.join(t_app[a:b+1]).lower(), tau1.lower())
 		aligns = pe.find_alignments()
