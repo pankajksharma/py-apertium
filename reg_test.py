@@ -140,12 +140,15 @@ else:
 print("Average best patched WER: %.02f%%" %(sum(best_wer) / len(best_wer) * 100))
 print("Average WER: %.02f%%" %(sum(gl_wer) / len(gl_wer) * 100))
 print("Average unpatched WER: %.02f%%" %(sum(gl_up_wer) / len(gl_up_wer) * 100))
-print("Number of patched sentences: %02d" %(int(gl_no_of_patches)))
+print("Number of patched sentences: %d" %(int(gl_no_of_patches)))
+print("Average number of patches per sentences: %.02f" %(gl_no_of_patches / len(best_wer)))
 
 if mode == 'compare':
 	print("Global Statistics (covering all mismatches):")
 	print("Average best patched WER: %.02f%%" %(sum(best_wer2) / (len(best_wer2) * 100)))
 	print("Average WER: %.02f%%" %(sum(gl_wer2) / len(gl_wer2) * 100))
 	print("Average unpatched WER: %.02f%%" %(sum(gl_up_wer) / len(gl_up_wer) * 100))
-	print("Number of patched sentences: %02d" %(int(gl_no_of_patches2)))
+	print("Number of patched sentences: %d" %(int(gl_no_of_patches2)))
+	print("Average number of patches per sentences: %.02f" %(gl_no_of_patches2 / len(best_wer2)))
 
+print("Number of unpatched sentences: %d" %(len(gl_up_wer) - len(best_wer)))
