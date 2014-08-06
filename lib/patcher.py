@@ -138,16 +138,19 @@ class Patcher(object):
 							tau1 = self.src_trans_map1[sigma1]	#No need for another 'for' now
 							s_set_temp = []
 							for (t1, features, covered, cs, cs1, c_all, traces) in s_set:
-								if c_all:
+								if c_all:	#Covers all mismatch
 									continue
 								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:], grounded_only)
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)
 									cam = self._covers_all_mimatches(sigma, sigma1, cs, cs1)
-									s_set_temp.append((t1_new, features, covered_new, cs, cs1, cam,
+									new_traces = traces[:]
+									new_traces.append(
 										(' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
 												' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
-												' '.join(TS[tau[0]:tau[1]+1]).strip().lower())))
+												' '.join(TS[tau[0]:tau[1]+1]).strip().lower())
+									)
+									s_set_temp.append((t1_new, features, covered_new, cs, cs1, cam, new_traces))
 									# s_set_temp[(t1_new, features, covered_new)] = self._covers_all_mimatches(sigma, sigma1)))
 									# print(t_out)
 									# if verbose:

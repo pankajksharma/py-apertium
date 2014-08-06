@@ -79,11 +79,14 @@ for (patch, features, _, _, _, cam, traces) in patches:
 		if verbose:
 			print(features)
 		if show_traces:
-			print(traces)
+			for trace in traces:
+				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
 	elif not cover_all:
 		print(patch)
 		if verbose:
 			print(features)
 		if show_traces:
-			print(traces)
+			for trace in traces:
+				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+
 

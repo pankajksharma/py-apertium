@@ -7,7 +7,7 @@ See http://wiki.apertium.org/wiki/User:Pankajksharma/Application#Proposal for mo
 
 ##GSoC work##
 
-###On the fly patching###
+===                       On the fly patching===
 
 usage: repair.py [-h] [-d D] [--min-fms MIN_FMS] [--min-len MIN_LEN]
                  [--max-len MAX_LEN]
@@ -37,7 +37,7 @@ optional arguments:
 
   --max-len MAX_LEN  Maximum length of sub-segment allowed.
 
-###fms.py
+===fms.py
 
 usage: fms.py [-h] S S1
 
@@ -53,7 +53,7 @@ optional arguments:
 
   -h, --help  show this help message and exit
 
-###reg_test.py
+===reg_test.py
 
 Regression test for our patcher
 
@@ -95,7 +95,7 @@ Script understands following modes:
 Example usage: python reg_test.py en-es.pairs en-es --mode compare
 
 
-###preprocess.py
+===preprocess.py
 
 Preprocess the corpus for generating input for reg_test
 
@@ -125,7 +125,7 @@ optional arguments:
   example: python preprocess.py ../ap/mtacat/en.en-es.train ../ap/mtacat/es.en-es.train ../ap/mtacat/en.en-es.testset ../ap/mtacat/es.en-es.test en-es.pairs -v
 
 
-###file_stats.py
+===file_stats.py
 
 Calculates and show a histogram of the distribution of FMS between pair of sentences present in corpus F.
 
@@ -141,7 +141,7 @@ optional arguments:
 
   --min-fms MIN_FMS  Minimum value of fuzzy match score of S and S1.
 
-###stats.py
+===stats.py
 
 usage: stats.py [-h] [-d D] [--min-fms MIN_FMS] [--min-len MIN_LEN]
                 [--max-len MAX_LEN]
@@ -165,7 +165,7 @@ optional arguments:
 
   --max-len MAX_LEN  Maximum length of sub-string allowed.
 
-###Set A generator###
+===Set A generator===
 
 usage: A_generator.py [-h] [--min-fms MIN_FMS] [--min-len MIN_LEN]
                       [--max-len MAX_LEN]
@@ -198,7 +198,7 @@ Expected Output:
 ("string", "another string") 
 
 
-###Set D generator###
+===Set D generator===
 
 Usage: python D_generator.py --helpusage: D_generator.py [-h] [-d D] [--min-fms MIN_FMS] [--min-len MIN_LEN] [--max-len MAX_LEN]
                       S T S1 LP
@@ -247,4 +247,4 @@ Example: python D_generator.py "he changed his number recently" "Va canviar el s
 
 ("Número recentment", "Adreça recentment")
 
-####For pre-SoC wok see [pre-soc/](https://github.com/pankajksharma/py-apertium/tree/master/pre_soc)
+===#For pre-SoC wok see [pre-soc/](https://github.com/pankajksharma/py-apertium/tree/master/pre_soc)
