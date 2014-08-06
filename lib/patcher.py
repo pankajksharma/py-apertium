@@ -89,6 +89,8 @@ class Patcher(object):
 		if grounded_only:
 			pe = PhraseExtractor(seg.lower(), tau1.lower())
 			aligns = pe.find_alignments()
+			if aligns == []:
+				return None, None
 			p = min(a[0] for a in aligns)
 			q = max(a[0] for a in aligns)
 			r = min(a[1] for a in aligns)
