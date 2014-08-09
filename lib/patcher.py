@@ -1,17 +1,23 @@
 from lib.ap import Apertium
+from lib.cacher import Cacher
 from lib.features import get_features
 from lib.phrase_extractor import PhraseExtractor
 from lib.utilities import preprocess, assertion, get_subsegment_locs, patch
+
 
 class Patcher(object):
 	"""
 		Patches the strings passed.
 	"""
-	def __init__(self, apertium, first_source_sentence, second_source_sentence, target_sentence):		
+	def __init__(self, apertium, first_source_sentence, second_source_sentence, target_sentence, 
+		caching=False, cache_db_file=':memory:'):		
 		self.apertium = apertium
 		self.s_sentence = first_source_sentence.lower()
 		self.s1_sentence = second_source_sentence.lower()
 		self.t_sentence = target_sentence.lower()
+		self.caching = caching
+		if caching:
+			self.cacher = Cacher(apertium.s_lang, apertium.t_lang, cache_db_file)
 
 	def _do_edit_distace_alignment(self, min_len, max_len):
 		#Do edit distance alignment
@@ -46,6 +52,9 @@ class Patcher(object):
 		src = ""
 		src1 = ""
 		self.mismatches_map = {}
+		self.src_trans_map = {}
+		self.src_trans_map1 = {}
+		could_be_done_from_caching = True
 
 		for a,b,c,d in self.phrases:
 			try:
@@ -53,27 +62,59 @@ class Patcher(object):
 			except KeyError:
 				self.mismatches_map[(a,b)] = [(c,d)]
 
-			str1 = ' '.join(S[a: b+1])
-			str2 = ' '.join(S1[c: d+1])
-			src += str1 + '.|'
-			src1 += str2 + '.|'
+		if self.caching:
+			tgt_segments, tgt1_segments = [], []
+			for a,b,c,d in self.phrases:
+				str1 = ' '.join(S[a: b+1])
+				str2 = ' '.join(S1[c: d+1])
+				
+				tgt1 = self.cacher.retrieve(str1)
+				tgt2 = self.cacher.retrieve(str2)
+				print(str1, str2, tgt1, tgt2)
+				if not (tgt1 and tgt2):
+					could_be_done_from_caching = False
+					break
+				tgt_segments.append(tgt1)
+				tgt1_segments.append(tgt2)
 
-		src_combined = src+'.||.'+src1
+			if could_be_done_from_caching:
+				for (x, t, t1) in zip(self.phrases, tgt_segments, tgt1_segments):
+					(a,b,c,d) = x
+					self.src_trans_map[(a,b)] = t
+					self.src_trans_map1[(c,d)] = t1
 
-		#Get translations for segments.
-		(out, err) = self.apertium.translate(src_combined)
-		# print(out, err)
-		(out, out1) = out.split('.||.')
+		print(self.caching, could_be_done_from_caching)
+		if not self.caching or not could_be_done_from_caching:
+			for a,b,c,d in self.phrases:
+				str1 = ' '.join(S[a: b+1])
+				str2 = ' '.join(S1[c: d+1])
 
-		tgt_segments = out.split('.|')
-		tgt1_segments = out1.split('.|')
+				src += str1 + '.|'
+				src1 += str2 + '.|'
 
-		self.src_trans_map = {}
-		self.src_trans_map1 = {}
-		for (x, t, t1) in zip(self.phrases, tgt_segments[:-1], tgt1_segments[:-1]):
-			(a,b,c,d) = x
-			self.src_trans_map[(a,b)] = t
-			self.src_trans_map1[(c,d)] = t1
+			src_combined = src+'.||.'+src1
+
+			#Get translations for segments.
+			(out, err) = self.apertium.translate(src_combined)
+			# print(out, err)
+			(out, out1) = out.split('.||.')
+
+			tgt_segments = out.split('.|')
+			tgt1_segments = out1.split('.|')
+
+			for (x, t, t1) in zip(self.phrases, tgt_segments[:-1], tgt1_segments[:-1]):
+				(a,b,c,d) = x
+				self.src_trans_map[(a,b)] = t
+				self.src_trans_map1[(c,d)] = t1
+				if self.caching:
+					str1 = ' '.join(S[a: b+1])
+					str2 = ' '.join(S1[c: d+1])
+					print(str1, str2, t, t1)
+					try:
+						self.cacher.insert(str1, t)
+						self.cacher.insert(str2, t1)
+					except Exception, e:
+						print(str(e))
 
 	def _do_patching(self, t_app, tau, tau1, covered_pos, grounded_only):
 		(a,b) = tau

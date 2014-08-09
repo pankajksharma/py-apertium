@@ -25,3 +25,9 @@ class FMS(object):
 		wf = EDWF(self._src, self._tgt)
 		ed = wf.get_distance()*1.0
 		return 1.0 - (ed / self._max_len())
+
+	def calculate_using_wagner_fischer(self):
+		"""returns FMS using Wanger Fischer Algorithm."""
+		wf = EDWF(self._src, self._tgt)
+		ed = wf.get_distance()*1.0
+		return 1.0 - (ed / self._max_len())		
