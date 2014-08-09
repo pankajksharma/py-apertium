@@ -70,12 +70,12 @@ class Patcher(object):
 				
 				tgt1 = self.cacher.retrieve(str1)
 				tgt2 = self.cacher.retrieve(str2)
-				print(str1, str2, tgt1, tgt2)
+				
 				if not (tgt1 and tgt2):
 					could_be_done_from_caching = False
 					break
-				tgt_segments.append(tgt1)
-				tgt1_segments.append(tgt2)
+				tgt_segments.append(tgt1[0])
+				tgt1_segments.append(tgt2[0])
 
 			if could_be_done_from_caching:
 				for (x, t, t1) in zip(self.phrases, tgt_segments, tgt1_segments):
@@ -83,7 +83,6 @@ class Patcher(object):
 					self.src_trans_map[(a,b)] = t
 					self.src_trans_map1[(c,d)] = t1
 
-		print(self.caching, could_be_done_from_caching)
 		if not self.caching or not could_be_done_from_caching:
 			for a,b,c,d in self.phrases:
 				str1 = ' '.join(S[a: b+1])
@@ -109,7 +108,6 @@ class Patcher(object):
 				if self.caching:
 					str1 = ' '.join(S[a: b+1])
 					str2 = ' '.join(S1[c: d+1])
-					print(str1, str2, t, t1)
 					try:
 						self.cacher.insert(str1, t)
 						self.cacher.insert(str2, t1)
