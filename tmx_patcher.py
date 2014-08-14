@@ -38,6 +38,7 @@ assertion(os.path.isfile(tmxfile), "TM does not exist")
 assertion(len(lps) == 2, "LP should be of type a-b, eg, 'en-eo'")
 
 #Read optional params
+cache = args.c
 lp_dir = args.d
 verbose = args.v
 show_traces = args.t
