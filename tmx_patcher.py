@@ -16,6 +16,7 @@ parser.add_argument('LP', help='Language Pair for TM (for example en-eo)')
 
 parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('-t', help='Show patching traces', action='store_true')
+parser.add_argument('-c', help='Specify the sqlite3 db to be used for caching', default='')
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('--cam', help='Only those patches which cover all the mismatches', action='store_true')
 parser.add_argument('--go', help='To patch only grounded mismatches', action='store_true')
@@ -46,6 +47,12 @@ min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len)
 
+cache_db_file = None
+if cache != '':
+	cache_db_file = cache
+
+use_caching = True if cache_db_file else False
+
 #Initiate and check Apertium
 apertium = Apertium(lps[0], lps[1])
 (out, err) = apertium.check_installations(lp_dir)
@@ -71,7 +78,9 @@ sorted_fms = sorted(fmses, key=fmses.get)
 
 (src, tgt) = sorted_fms[0] #Best match 
 
-patches = Patcher(apertium, src, s_sentence, tgt).patch(min_len, max_len, grounded)
+patcher = Patcher(apertium, src, s_sentence, tgt, use_caching, cache_db_file)
+patches = patcher.patch(min_len, max_len, grounded)
+best_patch = patcher.get_best_patch()
 
 for (patch, features, _, _, _, cam, traces) in patches:
 	if cover_all and cam:
@@ -90,3 +99,10 @@ for (patch, features, _, _, _, cam, traces) in patches:
 				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
 
 
+print("\nBest possible transalation:")
+(patch, features, _, _, _, _, traces) = best_patch
+print(patch)
+if verbose:
+	print(features)
+if show_traces:
+	print(traces)

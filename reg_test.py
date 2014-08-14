@@ -17,6 +17,7 @@ parser.add_argument('out', help='Output file generated from test.py')
 parser.add_argument('LP', help='Language Pair (sl-tl)')
 
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
+parser.add_argument('-c', help='Specify the sqlite3 db to be used for caching', default='')
 parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('--mode', help="Modes('all', 'cam', 'compare')", default='all')
 parser.add_argument('--go', help='To patch only grounded mismatches', action='store_true')
@@ -36,6 +37,7 @@ assertion(os.path.isfile(args.out), args.out+" doesn't exist")
 #TODO:Check lines are equal in SLFs and TLFs.
 
 #Command line params
+cache = args.c
 lp_dir = args.d
 verbose = args.v
 mode = args.mode.lower()
@@ -46,6 +48,11 @@ min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) 
 
+cache_db_file = None
+if cache != '':
+	cache_db_file = cache
+
+use_caching = True if cache_db_file else False
 
 apertium = Apertium(lps[0], lps[1])
 (out, err) = apertium.check_installations(lp_dir)
@@ -84,7 +91,8 @@ while True:
 
 	tgt_sentences = t1.lower()
 	
-	patches = Patcher(apertium, s, s1, t).patch(min_len, max_len, grounded)
+	patcher = Patcher(apertium, s, s1, t, use_caching, cache_db_file)
+	patches = patcher.patch(min_len, max_len, grounded)
 
 	unpatched = patches[0]
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()

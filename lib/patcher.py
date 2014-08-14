@@ -40,10 +40,10 @@ class Patcher(object):
 				return False
 		return True
 
-	def _covers_all_mimatches(self, sigma, sigma1, cs, cs1):
+	def _update_coverings(self, sigma, sigma1, cs, cs1):
 		cs.append(sigma)
 		cs1.append(sigma1)
-		return self._check_for_all_mismatches(cs, cs1)
+		return cs, cs1
 
 	def _do_translations(self):
 		S = self.s_sentence.split()
@@ -154,8 +154,21 @@ class Patcher(object):
 	def _covers_mismatch(self, sigma):
 		return sigma in self.mismatches_map.keys() 
 
+	def get_best_patch(self):
+		"""Returns the best possible patch based upon the overlap"""
+		max_sum_of_sigmas = 0
+		best_patch = self._s_set[0]
+		for patch in self._s_set[1:]:
+			(_, _, _, sc, sc1, _, _) = patch
+			sum_of_sigmas = sum([(b-a) for (a,b) in sc])
+			sum_of_sigmas += sum([(b-a) for (a,b) in sc1])
+			if sum_of_sigmas > max_sum_of_sigmas:
+				best_patch = patch
+				max_sum_of_sigmas = sum_of_sigmas
+		return best_patch
+
 	def patch(self, min_len=2, max_len=5, grounded_only=False):
-		#Some preprocessings
+		"""Does the actual patching."""
 		self._do_edit_distace_alignment(min_len, max_len)
 		self._do_translations()
 
@@ -184,7 +197,8 @@ class Patcher(object):
 								t1_new, covered_new = self._do_patching(t1, tau, tau1, covered[:], grounded_only)
 								if t1_new != None:
 									features = get_features(p, sigma, self.src_mismatches, t1_new, t1, tau)
-									cam = self._covers_all_mimatches(sigma, sigma1, cs, cs1)
+									cs, cs1 = self._update_coverings(sigma, sigma1, cs[:], cs1[:])
+									cam = self._check_for_all_mismatches(cs, cs1)
 									new_traces = traces[:]
 									new_traces.append(
 										(' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
@@ -192,16 +206,8 @@ class Patcher(object):
 												' '.join(TS[tau[0]:tau[1]+1]).strip().lower())
 									)
 									s_set_temp.append((t1_new, features, covered_new, cs, cs1, cam, new_traces))
-									# s_set_temp[(t1_new, features, covered_new)] = self._covers_all_mimatches(sigma, sigma1)))
-									# print(t_out)
-									# if verbose:
-									# print(covered_new)
-									# print(features)
-									# print((' '.join(S[sigma[0]:sigma[1]+1]).strip().lower(), 
-									# 			' '.join(S1[sigma1[0]:sigma1[1]+1]).strip().lower(), 
-									# 			' '.join(TS[tau[0]:tau[1]+1]).strip().lower(), tau1))
-									# time.sleep(2)
 							s_set += s_set_temp
 			p += 1
+		self._s_set = s_set
 		return s_set
 		
