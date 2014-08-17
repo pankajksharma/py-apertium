@@ -19,6 +19,7 @@ parser.add_argument('-c', help='Specify the sqlite3 db to be used for caching', 
 parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
 parser.add_argument('--cam', help='Only those patches which cover all the mismatches', action='store_true')
 parser.add_argument('--go', help='To patch only grounded mismatches', action='store_true')
+parser.add_argument('--bo', help='Prints the best possible transalation only', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-segment allowed.', default='2')
 parser.add_argument('--max-len', help='Maximum length of sub-segment allowed.')
@@ -46,6 +47,7 @@ verbose = args.v
 show_traces = args.t
 cover_all = args.cam
 grounded = args.go
+best_only = args.bo
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) if args.max_len else max(len(s_sentence.split()), len(s1_sentence.split()))
@@ -70,26 +72,29 @@ patcher = Patcher(apertium, s_sentence, s1_sentence, t_sentence, use_caching, ca
 patches = patcher.patch(min_len, max_len, grounded)
 best_patch = patcher.get_best_patch()
 
-for (patch, features, _, _, _, cam, traces) in patches:
-	if cover_all and cam:
-		print(patch)
-		if verbose:
-			print(features)
-		if show_traces:
-			for trace in traces:
-				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
-	elif not cover_all:
-		print(patch)
-		if verbose:
-			print(features)
-		if show_traces:
-			for trace in traces:
-				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
-
-print("\nBest possible transalation:")
+print("Best possible transalation:")
 (patch, features, _, _, _, _, traces) = best_patch
 print(patch)
 if verbose:
 	print(features)
 if show_traces:
 	print(traces)
+
+if not best_only:
+	print("\nAll possible patches:")
+	for (patch, features, _, _, _, cam, traces) in patches:
+		if cover_all and cam:
+			print(patch)
+			if verbose:
+				print(features)
+			if show_traces:
+				for trace in traces:
+					print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+		elif not cover_all:
+			print(patch)
+			if verbose:
+				print(features)
+			if show_traces:
+				for trace in traces:
+					print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+
