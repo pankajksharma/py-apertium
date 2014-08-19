@@ -9,7 +9,7 @@ def preprocess(sentence):
 def assertion(condition, statement):
 	"""Checks condition and exits with NZ exit if it's not True."""
 	if not condition:
-		sys.stderr.write(statement+"\nexiting...\n")
+		sys.stderr.write(statement+"\n")
 		exit(1)
 
 def is_subsegment(segment, sentence):
