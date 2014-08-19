@@ -90,7 +90,7 @@ got_patches = print_patch(best_patch, cover_all, verbose, show_traces)
 
 if not best_only:
 	for patch in patches:
-		got_patches = print_patch(patch, cover_all, verbose, show_traces)
+		got_patches = print_patch(patch, cover_all, verbose, show_traces) | got_patches
 
 conditions = "No possible repairs"
 if cover_all:
