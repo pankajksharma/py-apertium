@@ -72,9 +72,23 @@ patcher = Patcher(apertium, s_sentence, s1_sentence, t_sentence, use_caching, ca
 patches = patcher.patch(min_len, max_len, grounded)
 best_patch = patcher.get_best_patch()
 
-print_patch(best_patch, cover_all, verbose, show_traces)
+got_patches = False
+got_patches = print_patch(best_patch, cover_all, verbose, show_traces)
 
-if (not best_only) and len(patches) > 0:
+if not best_only:
 	print("\nAll possible patches:")
 	for patch in patches:
-		print_patch(patch, cover_all, verbose, show_traces)
+		got_patches = print_patch(patch, cover_all, verbose, show_traces)
+
+conditions = "No possible repairs"
+if cover_all:
+	conditions += " which covers all mismatches"
+if grounded:
+	if conditions != "No possible repairs":
+		conditions += " and"
+	else:
+		conditions += " which"
+	conditions += " are well grounded"
+conditions += "."
+
+assertion(got_patches, conditions)

@@ -9,7 +9,7 @@ def preprocess(sentence):
 def assertion(condition, statement):
 	"""Checks condition and exits with NZ exit if it's not True."""
 	if not condition:
-		sys.stderr.write(statement+"\nexiting...")
+		sys.stderr.write(statement+"\nexiting...\n")
 		exit(1)
 
 def is_subsegment(segment, sentence):
@@ -36,6 +36,8 @@ def get_subsegment_locs(segment, sentence):
 
 def print_patch(patch, cover_all, verbose, show_traces):
 	"""prints patch based upon multiple parameters passed."""
+	if not patch:
+		return False
 	(patch, features, _, _, _, cam, traces) = patch
 	if cover_all and cam:
 		print(patch)
@@ -44,6 +46,7 @@ def print_patch(patch, cover_all, verbose, show_traces):
 		if show_traces:
 			for trace in traces:
 				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+		return True
 	elif not cover_all:
 		print(patch)
 		if verbose:
@@ -51,6 +54,8 @@ def print_patch(patch, cover_all, verbose, show_traces):
 		if show_traces:
 			for trace in traces:
 				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+		return True
+	return False
 
 def patch(t_app, tau, tau1, covered_pos):
 	print(t_app, tau, tau1)

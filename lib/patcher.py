@@ -156,9 +156,10 @@ class Patcher(object):
 
 	def get_best_patch(self):
 		"""Returns the best possible patch based upon the overlap"""
-		max_sum_of_sigmas = 0
-		best_patch = self._s_set[0]
-		for patch in self._s_set[1:]:
+		max_sum_of_sigmas = -1
+		best_patch = None
+
+		for patch in self._s_set:
 			(_, _, _, sc, sc1, _, _) = patch
 			sum_of_sigmas = sum([(b-a) for (a,b) in sc])
 			sum_of_sigmas += sum([(b-a) for (a,b) in sc1])
@@ -208,6 +209,8 @@ class Patcher(object):
 									s_set_temp.append((t1_new, features, covered_new, cs, cs1, cam, new_traces))
 							s_set += s_set_temp
 			p += 1
+		if grounded_only:
+			s_set.pop(0)
 		self._s_set = s_set
 		return s_set
 		
