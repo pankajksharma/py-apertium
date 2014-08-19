@@ -34,6 +34,24 @@ def get_subsegment_locs(segment, sentence):
 		a += 1
 	return locs
 
+def print_patch(patch, cover_all, verbose, show_traces):
+	"""prints patch based upon multiple parameters passed."""
+	(patch, features, _, _, _, cam, traces) = patch
+	if cover_all and cam:
+		print(patch)
+		if verbose:
+			print(features)
+		if show_traces:
+			for trace in traces:
+				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+	elif not cover_all:
+		print(patch)
+		if verbose:
+			print(features)
+		if show_traces:
+			for trace in traces:
+				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+
 def patch(t_app, tau, tau1, covered_pos):
 	print(t_app, tau, tau1)
 	(a,b) = tau

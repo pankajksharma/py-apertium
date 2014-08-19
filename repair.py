@@ -2,7 +2,7 @@ import argparse, sys, time
 from lib.fms import FMS
 from lib.ap import Apertium
 from lib.patcher import Patcher
-from lib.utilities import preprocess, assertion
+from lib.utilities import preprocess, assertion, print_patch
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -72,30 +72,9 @@ patcher = Patcher(apertium, s_sentence, s1_sentence, t_sentence, use_caching, ca
 patches = patcher.patch(min_len, max_len, grounded)
 best_patch = patcher.get_best_patch()
 
-if not best_only:
-	print("Best possible transalation:")
-(patch, features, _, _, _, _, traces) = best_patch
-print(patch)
-if verbose:
-	print(features)
-if show_traces:
-	print(traces)
+print_patch(best_patch, cover_all, verbose, show_traces)
 
-if not best_only:
+if (not best_only) and len(patches) > 0:
 	print("\nAll possible patches:")
-	for (patch, features, _, _, _, cam, traces) in patches:
-		if cover_all and cam:
-			print(patch)
-			if verbose:
-				print(features)
-			if show_traces:
-				for trace in traces:
-					print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
-		elif not cover_all:
-			print(patch)
-			if verbose:
-				print(features)
-			if show_traces:
-				for trace in traces:
-					print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
-
+	for patch in patches:
+		print_patch(patch, cover_all, verbose, show_traces)
