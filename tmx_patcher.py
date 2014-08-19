@@ -86,7 +86,8 @@ patcher = Patcher(apertium, src, s_sentence, tgt, use_caching, cache_db_file)
 patches = patcher.patch(min_len, max_len, grounded)
 best_patch = patcher.get_best_patch()
 
-print("Best possible transalation:")
+if not best_only:
+	print("Best possible transalation:")
 (patch, features, _, _, _, _, traces) = best_patch
 print(patch)
 if verbose:
