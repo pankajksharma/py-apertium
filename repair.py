@@ -76,7 +76,6 @@ got_patches = False
 got_patches = print_patch(best_patch, cover_all, verbose, show_traces)
 
 if not best_only:
-	print("\nAll possible patches:")
 	for patch in patches:
 		got_patches = print_patch(patch, cover_all, verbose, show_traces)
 

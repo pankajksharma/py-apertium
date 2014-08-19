@@ -156,6 +156,9 @@ class Patcher(object):
 
 	def get_best_patch(self):
 		"""Returns the best possible patch based upon the overlap"""
+		return self._best_patch
+
+	def _find_best_patch(self):
 		max_sum_of_sigmas = -1
 		best_patch = None
 
@@ -212,5 +215,8 @@ class Patcher(object):
 		if grounded_only:
 			s_set.pop(0)
 		self._s_set = s_set
+		self._best_patch = self._find_best_patch()
+		if self._best_patch:
+			s_set.remove(self._best_patch)
 		return s_set
 		
