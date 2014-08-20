@@ -52,6 +52,8 @@ min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) if args.max_len else max(len(s_sentence.split()), len(s1_sentence.split()))
 
+warning(min_len > 1 & grounded, "min_len should be greater than 1")
+
 if cache != '':
 	cache_db_file = cache
 

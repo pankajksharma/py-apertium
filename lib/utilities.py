@@ -12,6 +12,10 @@ def assertion(condition, statement):
 		sys.stderr.write(statement+"\n")
 		exit(1)
 
+def warning(condition, statement):
+	if not condition:
+		sys.stderr.write(statement+"\n")
+
 def is_subsegment(segment, sentence):
 	"""Checks for subsegments."""
 	seg, sen = segment.lower(), sentence.lower()

@@ -6,7 +6,7 @@ from lib.patcher import Patcher
 from lib.utilities import assertion
 from lib.features import get_features
 from lib.phrase_extractor import PhraseExtractor
-from lib.utilities import preprocess, assertion, get_subsegment_locs, patch
+from lib.utilities import preprocess, assertion, get_subsegment_locs, patch, warning
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -47,6 +47,8 @@ grounded = args.go
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) 
+
+warning(min_len > 1 & grounded, "min_len should be greater than 1")
 
 cache_db_file = None
 if cache != '':
@@ -93,16 +95,19 @@ while True:
 	
 	patcher = Patcher(apertium, s, s1, t, use_caching, cache_db_file)
 	patches = patcher.patch(min_len, max_len, grounded, lp_dir)
+	patches.append(patcher.get_best_patch())
 
+	all_patches = patches[:]
 	if not grounded:
 		unpatched = patches[0]
+		patches.pop(0)
 	else:
-		unpatched = (t1, "unpatched", [], [], [], False, [])
-		patches += unpatched
+		unpatched = (t1,)
+	
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 	gl_up_wer.append(up_wer)
 
-	for (patch, features, _, _, _, cam, traces) in patches[:]:
+	for (patch, features, _, _, _, cam, traces) in all_patches:
 		if mode == 'all':
 			fms = FMS(patch.lower(), tgt_sentences).calculate_using_wanger_fischer()
 			wer.append(1.0-fms)
@@ -149,18 +154,23 @@ if mode == 'compare':
 	print("Global Statistics(all):")
 else:
 	print("Global Statistics:")
-print("Average best patched WER: %.02f%%" %(sum(best_wer) / len(best_wer) * 100))
-print("Average WER: %.02f%%" %(sum(gl_wer) / len(gl_wer) * 100))
+warning(best_wer != [], "No suitable patched candidate counld be obtained")
+if best_wer != []:
+	print("Average best patched WER: %.02f%%" %(sum(best_wer) / len(best_wer) * 100))
+	print("Average WER: %.02f%%" %(sum(gl_wer) / len(gl_wer) * 100))
 print("Average unpatched WER: %.02f%%" %(sum(gl_up_wer) / len(gl_up_wer) * 100))
 print("Number of patched sentences: %d" %(int(gl_no_of_patches)))
-print("Average number of patches per sentences: %.02f" %(gl_no_of_patches / len(best_wer)))
+if best_wer != []:
+	print("Average number of patches per sentences: %.02f" %(gl_no_of_patches / len(best_wer)))
 
 if mode == 'compare':
 	print("Global Statistics (covering all mismatches):")
-	print("Average best patched WER: %.02f%%" %(sum(best_wer2) / (len(best_wer2) * 100)))
-	print("Average WER: %.02f%%" %(sum(gl_wer2) / len(gl_wer2) * 100))
+	if best_wer != []:
+		print("Average best patched WER: %.02f%%" %(sum(best_wer2) / (len(best_wer2) * 100)))
+		print("Average WER: %.02f%%" %(sum(gl_wer2) / len(gl_wer2) * 100))
 	print("Average unpatched WER: %.02f%%" %(sum(gl_up_wer) / len(gl_up_wer) * 100))
 	print("Number of patched sentences: %d" %(int(gl_no_of_patches2)))
-	print("Average number of patches per sentences: %.02f" %(gl_no_of_patches2 / len(best_wer2)))
+	if best_wer != []:
+		print("Average number of patches per sentences: %.02f" %(gl_no_of_patches2 / len(best_wer2)))
 
 print("Number of unpatched sentences: %d" %(len(gl_up_wer) - len(best_wer)))

@@ -11,6 +11,7 @@ class Cacher(object):
 		if not isfile(file):
 			new = True
 		self._conn = sqlite3.connect(file)
+		self._conn.text_factory = str
 		self._cursor = self._conn.cursor()
 		if new:
 			self._create_tables()

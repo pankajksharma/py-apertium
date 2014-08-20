@@ -50,6 +50,8 @@ min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len)
 
+warning(min_len > 1 & grounded, "min_len should be greater than 1")
+
 cache_db_file = None
 if cache != '':
 	cache_db_file = cache

@@ -2,7 +2,7 @@ from lib.ap import Apertium
 from lib.cacher import Cacher
 from lib.features import get_features
 from lib.phrase_extractor import PhraseExtractor
-from lib.utilities import preprocess, assertion, get_subsegment_locs, patch
+from lib.utilities import preprocess, assertion, get_subsegment_locs, patch, warning
 
 
 class Patcher(object):
@@ -114,7 +114,6 @@ class Patcher(object):
 						self.cacher.insert(str2, t1)
 					except(Exception, e):
 						pass
-						# print(str(e))
 
 	def _do_patching(self, t_app, tau, tau1, covered_pos, grounded_only):
 		(a,b) = tau
