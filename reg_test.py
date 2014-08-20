@@ -16,7 +16,7 @@ parser.add_argument('out', help='Output file generated from test.py')
 
 parser.add_argument('LP', help='Language Pair (sl-tl)')
 
-parser.add_argument('-d', help='Specify the lanuguage-pair installation directory')
+parser.add_argument('-d', help='Specify the language-pair installation directory')
 parser.add_argument('-c', help='Specify the sqlite3 db to be used for caching', default='')
 parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('--mode', help="Modes('all', 'cam', 'compare')", default='all')
@@ -156,7 +156,7 @@ if mode == 'compare':
 	print("Global Statistics(all):")
 else:
 	print("Global Statistics:")
-warning(best_wer != [], "No suitable patched candidate counld be obtained")
+warning(best_wer != [], "No suitable patched candidate could be obtained")
 if best_wer != []:
 	print("Average best patched WER: %.02f%%" %(sum(best_wer) / len(best_wer) * 100))
 	print("Average WER: %.02f%%" %(sum(gl_wer) / len(gl_wer) * 100))
