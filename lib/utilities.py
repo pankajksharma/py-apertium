@@ -45,7 +45,7 @@ def print_patch(patch, cover_all, verbose, show_traces):
 			print(features)
 		if show_traces:
 			for trace in traces:
-				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+				print("(s='"+trace[0]+"', t='"+trace[1]+"', s'='"+trace[2]+"')")
 		return True
 	elif not cover_all:
 		print(patch)
@@ -53,7 +53,7 @@ def print_patch(patch, cover_all, verbose, show_traces):
 			print(features)
 		if show_traces:
 			for trace in traces:
-				print("('"+trace[0]+"', '"+trace[1]+"', '"+trace[2]+"')")
+				print("(s='"+trace[0]+"', t='"+trace[1]+"', s'='"+trace[2]+"')")
 		return True
 	return False
 

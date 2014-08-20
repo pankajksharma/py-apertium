@@ -69,7 +69,7 @@ fms = FMS(s_sentence, s1_sentence).calculate_using_wagner_fischer()
 assertion(fms >= min_fms, "Sentences have low fuzzy match score of %.02f." %fms)
 
 patcher = Patcher(apertium, s_sentence, s1_sentence, t_sentence, use_caching, cache_db_file)
-patches = patcher.patch(min_len, max_len, grounded)
+patches = patcher.patch(min_len, max_len, grounded, lp_dir)
 best_patch = patcher.get_best_patch()
 
 got_patches = False

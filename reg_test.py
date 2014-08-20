@@ -92,9 +92,12 @@ while True:
 	tgt_sentences = t1.lower()
 	
 	patcher = Patcher(apertium, s, s1, t, use_caching, cache_db_file)
-	patches = patcher.patch(min_len, max_len, grounded)
+	patches = patcher.patch(min_len, max_len, grounded, lp_dir)
 
-	unpatched = patches[0]
+	if not grounded:
+		unpatched = patches[0]
+	else:
+		unpatched = (t1,)
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 	gl_up_wer.append(up_wer)
 

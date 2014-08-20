@@ -82,7 +82,7 @@ sorted_fms = sorted(fmses, key=fmses.get)
 (src, tgt) = sorted_fms[0] #Best match 
 
 patcher = Patcher(apertium, src, s_sentence, tgt, use_caching, cache_db_file)
-patches = patcher.patch(min_len, max_len, grounded)
+patches = patcher.patch(min_len, max_len, grounded, lp_dir)
 best_patch = patcher.get_best_patch()
 
 got_patches = False

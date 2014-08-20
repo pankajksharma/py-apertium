@@ -45,7 +45,7 @@ class Patcher(object):
 		cs1.append(sigma1)
 		return cs, cs1
 
-	def _do_translations(self):
+	def _do_translations(self, dir=None):
 		S = self.s_sentence.split()
 		S1 = self.s1_sentence.split()
 		
@@ -94,7 +94,7 @@ class Patcher(object):
 			src_combined = src+'.||.'+src1
 
 			#Get translations for segments.
-			(out, err) = self.apertium.translate(src_combined)
+			(out, err) = self.apertium.translate(src_combined, dir)
 			# print(out, err)
 			(out, out1) = out.split('.||.')
 
@@ -171,10 +171,10 @@ class Patcher(object):
 				max_sum_of_sigmas = sum_of_sigmas
 		return best_patch
 
-	def patch(self, min_len=2, max_len=5, grounded_only=False):
+	def patch(self, min_len=2, max_len=5, grounded_only=False, dir=None):
 		"""Does the actual patching."""
 		self._do_edit_distace_alignment(min_len, max_len)
-		self._do_translations()
+		self._do_translations(dir)
 
 		S = self.s_sentence.split()
 		S1 = self.s1_sentence.split()
