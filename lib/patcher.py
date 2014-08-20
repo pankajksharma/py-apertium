@@ -96,6 +96,7 @@ class Patcher(object):
 			#Get translations for segments.
 			(out, err) = self.apertium.translate(src_combined, dir)
 			# print(out, err)
+			assertion(err == '', "Apertium error: "+err)
 			(out, out1) = out.split('.||.')
 
 			tgt_segments = out.split('.|')
@@ -111,7 +112,7 @@ class Patcher(object):
 					try:
 						self.cacher.insert(str1, t)
 						self.cacher.insert(str2, t1)
-					except Exception, e:
+					except(Exception, e):
 						pass
 						# print(str(e))
 

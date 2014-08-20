@@ -97,11 +97,12 @@ while True:
 	if not grounded:
 		unpatched = patches[0]
 	else:
-		unpatched = (t1,)
+		unpatched = (t1, "unpatched", [], [], [], False, [])
+		patches += unpatched
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 	gl_up_wer.append(up_wer)
 
-	for (patch, features, _, _, _, cam, traces) in patches[0:]:
+	for (patch, features, _, _, _, cam, traces) in patches[:]:
 		if mode == 'all':
 			fms = FMS(patch.lower(), tgt_sentences).calculate_using_wanger_fischer()
 			wer.append(1.0-fms)
