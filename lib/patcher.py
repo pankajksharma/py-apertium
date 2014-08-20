@@ -112,7 +112,8 @@ class Patcher(object):
 						self.cacher.insert(str1, t)
 						self.cacher.insert(str2, t1)
 					except Exception, e:
-						print(str(e))
+						pass
+						# print(str(e))
 
 	def _do_patching(self, t_app, tau, tau1, covered_pos, grounded_only):
 		(a,b) = tau
