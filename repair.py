@@ -2,7 +2,7 @@ import argparse, sys, time
 from lib.fms import FMS
 from lib.ap import Apertium
 from lib.patcher import Patcher
-from lib.utilities import preprocess, assertion, print_patch
+from lib.utilities import preprocess, assertion, print_patch, warning
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
