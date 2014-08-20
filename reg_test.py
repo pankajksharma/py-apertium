@@ -95,15 +95,17 @@ while True:
 	
 	patcher = Patcher(apertium, s, s1, t, use_caching, cache_db_file)
 	patches = patcher.patch(min_len, max_len, grounded, lp_dir)
-	patches.append(patcher.get_best_patch())
+	best_patch = patcher.get_best_patch()
+	if best_patch:
+		patches.append(best_patch)
 
 	all_patches = patches[:]
 	if not grounded:
 		unpatched = patches[0]
-		patches.pop(0)
+		all_patches.pop(0)
 	else:
 		unpatched = (t1,)
-	
+
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 	gl_up_wer.append(up_wer)
 
@@ -173,4 +175,4 @@ if mode == 'compare':
 	if best_wer != []:
 		print("Average number of patches per sentences: %.02f" %(gl_no_of_patches2 / len(best_wer2)))
 
-print("Number of unpatched sentences: %d" %(len(gl_up_wer) - len(best_wer)))
+print("Number of unpatched pairs: %d" %(len(gl_up_wer) - len(best_wer)))
