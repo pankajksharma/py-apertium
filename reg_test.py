@@ -21,6 +21,7 @@ parser.add_argument('-c', help='Specify the sqlite3 db to be used for caching', 
 parser.add_argument('-v', help='Verbose Mode', action='store_true')
 parser.add_argument('--mode', help="Modes('all', 'cam', 'compare')", default='all')
 parser.add_argument('--go', help='To patch only grounded mismatches', action='store_true')
+parser.add_argument('--bo', help='Uses the best possible transalation only', action='store_true')
 parser.add_argument('--min-fms', help='Minimum value of fuzzy match score of S and S1.', default='0.8')
 parser.add_argument('--min-len', help='Minimum length of sub-string allowed.', default='2')
 parser.add_argument('--max-len', help='Maximum length of sub-string allowed.', default='5')
@@ -44,9 +45,13 @@ mode = args.mode.lower()
 
 assertion(mode in ['all', 'cam', 'compare'], "Mode couldn't be identified.")
 grounded = args.go
+best_only = args.bo
 min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) 
+
+if best_only:
+	assertion(mode != 'compare', "Mode compare is not supported with --bo flag")
 
 warning(min_len > 1 & grounded, "min_len should be greater than 1")
 
@@ -96,6 +101,7 @@ while True:
 	patcher = Patcher(apertium, s, s1, t, use_caching, cache_db_file)
 	patches = patcher.patch(min_len, max_len, grounded, lp_dir)
 	best_patch = patcher.get_best_patch()
+	
 	if best_patch:
 		patches.append(best_patch)
 
@@ -105,6 +111,41 @@ while True:
 		all_patches.pop(0)
 	else:
 		unpatched = (t1,)
+
+	if best_only:
+		up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+		gl_up_wer.append(up_wer)
+		try:
+			cam = best_patch[5]
+		except:
+			cam = False
+
+		if not best_patch:
+			best_patch = unpatched
+			wer = -1
+			if mode == 'all':
+				fms = FMS(best_patch[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+				wer = 1.0-fms
+				best_wer.append(wer)
+				gl_wer.append(wer)
+				gl_no_of_patches += 1
+
+			elif mode == 'cam':
+				if cam:
+					fms = FMS(best_patch[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+					wer = 1.0-fms
+					best_wer.append(wer)
+					gl_wer.append(wer)
+					gl_no_of_patches += 1
+
+				else:
+					warning(True, "No patch with go and cam")
+
+			if verbose and wer != -1:
+				print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%%"
+					%(count, wer*100, ((wer+up_wer)/2.0)*100, up_wer*100))
+				count += 1
+			continue
 
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 	gl_up_wer.append(up_wer)
