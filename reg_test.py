@@ -50,9 +50,6 @@ min_fms = float(args.min_fms)
 min_len = int(args.min_len)
 max_len = int(args.max_len) 
 
-if best_only:
-	assertion(mode != 'compare', "Mode compare is not supported with --bo flag")
-
 warning(min_len > 1 & grounded, "min_len should be greater than 1")
 
 cache_db_file = None
@@ -101,6 +98,7 @@ while True:
 	patcher = Patcher(apertium, s, s1, t, use_caching, cache_db_file)
 	patches = patcher.patch(min_len, max_len, grounded, lp_dir)
 	best_patch = patcher.get_best_patch()
+	best_patch_with_cam = patcher.get_best_patch(True) #Best patched result covering all mismatches
 	
 	if best_patch:
 		patches.append(best_patch)
@@ -131,8 +129,8 @@ while True:
 				gl_no_of_patches += 1
 
 			elif mode == 'cam':
-				if cam:
-					fms = FMS(best_patch[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+				if best_patch_with_cam:
+					fms = FMS(best_patch_with_cam[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 					wer = 1.0-fms
 					best_wer.append(wer)
 					gl_wer.append(wer)
@@ -140,6 +138,20 @@ while True:
 
 				else:
 					warning(True, "No patch with go and cam")
+
+			else:	#Assuming mode = 'compare'
+				if best_patch_with_cam:
+					fms = FMS(best_patch[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+					wer = 1.0-fms
+					best_wer.append(wer)
+					gl_wer.append(wer)
+					gl_no_of_patches += 1
+
+					fms = FMS(best_patch_with_cam[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+					wer = 1.0-fms
+					best_wer2.append(wer)
+					gl_wer2.append(wer)
+					gl_no_of_patches2 += 1
 
 			if verbose and wer != -1:
 				print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%%"

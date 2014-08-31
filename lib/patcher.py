@@ -155,21 +155,31 @@ class Patcher(object):
 	def _covers_mismatch(self, sigma):
 		return sigma in self.mismatches_map.keys() 
 
-	def get_best_patch(self):
+	def get_best_patch(self, cam=False):
 		"""Returns the best possible patch based upon the overlap"""
-		return self._best_patch
+		if not cam:
+			return self._best_patch
+		self._s_set.append(self._best_patch)
+		return self._find_best_patch(cam)
 
-	def _find_best_patch(self):
+	def _find_best_patch(self, cam=False):
 		max_sum_of_sigmas = -1
 		best_patch = None
 
 		for patch in self._s_set:
-			(_, _, _, sc, sc1, _, _) = patch
-			sum_of_sigmas = sum([(b-a) for (a,b) in sc])
-			sum_of_sigmas += sum([(b-a) for (a,b) in sc1])
-			if sum_of_sigmas > max_sum_of_sigmas:
-				best_patch = patch
-				max_sum_of_sigmas = sum_of_sigmas
+			(_, _, _, sc, sc1, cm, _) = patch
+			if not cam:
+				sum_of_sigmas = sum([(b-a) for (a,b) in sc])
+				sum_of_sigmas += sum([(b-a) for (a,b) in sc1])
+				if sum_of_sigmas > max_sum_of_sigmas:
+					best_patch = patch
+					max_sum_of_sigmas = sum_of_sigmas
+			elif cam and cm:
+				sum_of_sigmas = sum([(b-a) for (a,b) in sc])
+				sum_of_sigmas += sum([(b-a) for (a,b) in sc1])
+				if sum_of_sigmas > max_sum_of_sigmas:
+					best_patch = patch
+					max_sum_of_sigmas = sum_of_sigmas
 		return best_patch
 
 	def patch(self, min_len=2, max_len=5, grounded_only=False, dir=None):
