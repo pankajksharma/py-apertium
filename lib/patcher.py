@@ -159,13 +159,13 @@ class Patcher(object):
 		"""Returns the best possible patch based upon the overlap"""
 		if not cam:
 			return self._best_patch
-		self._s_set.append(self._best_patch)
+		if self._best_patch:
+			self._s_set.append(self._best_patch)
 		return self._find_best_patch(cam)
 
 	def _find_best_patch(self, cam=False):
 		max_sum_of_sigmas = -1
 		best_patch = None
-
 		for patch in self._s_set:
 			(_, _, _, sc, sc1, cm, _) = patch
 			if not cam:
