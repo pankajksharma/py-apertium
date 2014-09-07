@@ -157,7 +157,7 @@ while True:
 				print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%%"
 					%(count, wer*100, ((wer+up_wer)/2.0)*100, up_wer*100))
 				count += 1
-			continue
+		continue
 
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 	gl_up_wer.append(up_wer)
