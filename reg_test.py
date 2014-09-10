@@ -150,8 +150,8 @@ while True:
 
 				fms = FMS(best_patch_with_cam[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 				wer2 = 1.0-fms
-				best_wer2.append(wer)
-				gl_wer2.append(wer)
+				best_wer2.append(wer2)
+				gl_wer2.append(wer2)
 				gl_no_of_patches2 += 1
 			else:
 				warning(True, "No patch with bo and cam")
@@ -161,7 +161,7 @@ while True:
 				%(count, wer*100, ((wer+up_wer)/2.0)*100, up_wer*100))
 			if mode == 'compare':
 				print("#%d(cam) Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%%"
-					%(count, wer*100, ((wer+up_wer)/2.0)*100, up_wer*100))
+					%(count, wer2*100, ((wer2+up_wer)/2.0)*100, up_wer*100))
 			count += 1
 		continue
 
