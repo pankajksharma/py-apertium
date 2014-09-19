@@ -104,6 +104,7 @@ while True:
 		patches.append(best_patch)
 
 	all_patches = patches[:]
+	
 	if not grounded:
 		unpatched = patches[0]
 		all_patches.pop(0)
@@ -113,6 +114,7 @@ while True:
 	if best_only:
 		up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 		gl_up_wer.append(up_wer)
+		wer = -1
 		try:
 			cam = best_patch[5]
 		except:
@@ -120,43 +122,47 @@ while True:
 
 		if not best_patch:
 			best_patch = unpatched
-			wer = -1
-			if mode == 'all':
+
+		if mode == 'all':
+			fms = FMS(best_patch[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+			wer = 1.0-fms
+			best_wer.append(wer)
+			gl_wer.append(wer)
+			gl_no_of_patches += 1
+
+		elif mode == 'cam':
+			if best_patch_with_cam:
+				fms = FMS(best_patch_with_cam[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+				wer = 1.0-fms
+				best_wer.append(wer)
+				gl_wer.append(wer)
+				gl_no_of_patches += 1
+			else:
+				warning(True, "No patch with bo and cam")
+
+		else:	#Assuming mode = 'compare'
+			if best_patch_with_cam:
 				fms = FMS(best_patch[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
 				wer = 1.0-fms
 				best_wer.append(wer)
 				gl_wer.append(wer)
 				gl_no_of_patches += 1
 
-			elif mode == 'cam':
-				if best_patch_with_cam:
-					fms = FMS(best_patch_with_cam[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
-					wer = 1.0-fms
-					best_wer.append(wer)
-					gl_wer.append(wer)
-					gl_no_of_patches += 1
+				fms = FMS(best_patch_with_cam[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
+				wer2 = 1.0-fms
+				best_wer2.append(wer2)
+				gl_wer2.append(wer2)
+				gl_no_of_patches2 += 1
+			else:
+				warning(True, "No patch with bo and cam")
 
-				else:
-					warning(True, "No patch with go and cam")
-
-			else:	#Assuming mode = 'compare'
-				if best_patch_with_cam:
-					fms = FMS(best_patch[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
-					wer = 1.0-fms
-					best_wer.append(wer)
-					gl_wer.append(wer)
-					gl_no_of_patches += 1
-
-					fms = FMS(best_patch_with_cam[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
-					wer = 1.0-fms
-					best_wer2.append(wer)
-					gl_wer2.append(wer)
-					gl_no_of_patches2 += 1
-
-			if verbose and wer != -1:
-				print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%%"
-					%(count, wer*100, ((wer+up_wer)/2.0)*100, up_wer*100))
-				count += 1
+		if verbose and wer != -1:
+			print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%%"
+				%(count, wer*100, ((wer+up_wer)/2.0)*100, up_wer*100))
+			if mode == 'compare':
+				print("#%d(cam) Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%%"
+					%(count, wer2*100, ((wer2+up_wer)/2.0)*100, up_wer*100))
+			count += 1
 		continue
 
 	up_wer = 1.0 - FMS(unpatched[0].lower(), tgt_sentences).calculate_using_wanger_fischer()
@@ -196,13 +202,20 @@ while True:
 		if wer != []:
 			best_wer.append(min(wer))
 
-	if verbose and mode != 'compare':
+	if verbose:
 		if wer != []:
 			print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%% N = %d"
 				%(count, min(wer)*100, (sum(wer)/no_of_patches)*100, up_wer*100, int(no_of_patches)))
 		else:
 			print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%% N = %d"
 				%(count, up_wer*100, up_wer*100, up_wer*100, int(no_of_patches)))
+		if mode == 'compare':
+			if wer2 != []:
+				print("#%d Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%% N = %d"
+					%(count, min(wer2)*100, (sum(wer2)/no_of_patches2)*100, up_wer*100, int(no_of_patches2)))
+			else:
+				print("#%d(cam) Best = %.02f%% Avg = %.02f%% Unpatched = %.02f%% N = %d"
+					%(count, up_wer*100, up_wer*100, up_wer*100, int(no_of_patches2)))
 		count += 1
 
 if mode == 'compare':
@@ -221,7 +234,7 @@ if best_wer != []:
 if mode == 'compare':
 	print("Global Statistics (covering all mismatches):")
 	if best_wer != []:
-		print("Average best patched WER: %.02f%%" %(sum(best_wer2) / (len(best_wer2) * 100)))
+		print("Average best patched WER: %.02f%%" %(sum(best_wer2) / len(best_wer2) * 100))
 		print("Average WER: %.02f%%" %(sum(gl_wer2) / len(gl_wer2) * 100))
 	print("Average unpatched WER: %.02f%%" %(sum(gl_up_wer) / len(gl_up_wer) * 100))
 	print("Number of patched sentences: %d" %(int(gl_no_of_patches2)))
